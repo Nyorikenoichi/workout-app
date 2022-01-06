@@ -1,2 +1,2 @@
 # workout-app
-Project N2 for Innowise Group internship
+Project №2 for Innowise internship
