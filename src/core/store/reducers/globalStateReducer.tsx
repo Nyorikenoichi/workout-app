@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { GlobalStateActionTypes } from '../action-types/globalStateActionTypes';
 
 interface GlobalState {
   count: number;
@@ -20,11 +21,11 @@ export const ContextApp = React.createContext<{
   state: initialState,
 });
 
-export function reducer(state: GlobalState, action: Action) {
+export function globalStateReducer(state: GlobalState, action: Action) {
   switch (action.type) {
-    case 'increment':
+    case GlobalStateActionTypes.inc:
       return { count: state.count + 1 };
-    case 'decrement':
+    case GlobalStateActionTypes.dec:
       return { count: state.count - 1 };
     default:
       throw new Error();

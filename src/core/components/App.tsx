@@ -2,14 +2,18 @@ import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ContextApp, initialState, reducer } from './reducer';
+import {
+  ContextApp,
+  initialState,
+  globalStateReducer,
+} from '../store/reducers/globalStateReducer';
 import { MainTheme } from '../style/mainTheme';
 import GlobalStyles from '../style/globalStyle';
-import Authentication from '../pages/authentication';
+import Authentication from '../../pages/auth/authentication';
 import MainRoutes from '../constants/mainRoutes';
 
 export default function App() {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+  const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
   const { t } = useTranslation();
 
   const contextValue = useMemo(() => ({ dispatch, state }), [state]);

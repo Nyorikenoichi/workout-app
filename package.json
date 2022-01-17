@@ -32,8 +32,11 @@
     "eslint": "npx eslint --fix ./"
   },
   "lint-staged": {
-    "*": [
-      "npm run eslint"
+    "*.{ts,tsx}": [
+      "eslint --fix --max-warnings 0 ./"
+    ],
+    "*.{html,css,json,md}": [
+      "prettier --write"
     ]
   },
   "browserslist": {

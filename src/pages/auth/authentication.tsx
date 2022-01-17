@@ -1,12 +1,16 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { ContextApp } from '../components/reducer';
+import { ContextApp } from '../../core/store/reducers/globalStateReducer';
+import {
+  globalStateDec,
+  globalStateInc,
+} from '../../core/store/actions/globalStateActions';
 
 export default function Authentication() {
   const { state, dispatch } = useContext(ContextApp);
 
-  const onIncrement = () => dispatch({ type: 'increment' });
-  const onDecrement = () => dispatch({ type: 'decrement' });
+  const onIncrement = () => dispatch(globalStateInc());
+  const onDecrement = () => dispatch(globalStateDec());
 
   return (
     <div>
