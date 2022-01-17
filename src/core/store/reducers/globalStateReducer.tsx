@@ -23,9 +23,9 @@ export const ContextApp = React.createContext<{
 
 export function globalStateReducer(state: GlobalState, action: Action) {
   switch (action.type) {
-    case GlobalStateActionTypes.inc:
+    case GlobalStateActionTypes.Increment:
       return { count: state.count + 1 };
-    case GlobalStateActionTypes.dec:
+    case GlobalStateActionTypes.Decrement:
       return { count: state.count - 1 };
     default:
       throw new Error();

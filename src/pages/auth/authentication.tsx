@@ -2,15 +2,15 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import {
-  globalStateDec,
-  globalStateInc,
+  incrementAction,
+  decrementAction,
 } from '../../core/store/actions/globalStateActions';
 
 export default function Authentication() {
   const { state, dispatch } = useContext(ContextApp);
 
-  const onIncrement = () => dispatch(globalStateInc());
-  const onDecrement = () => dispatch(globalStateDec());
+  const onIncrement = () => dispatch(incrementAction());
+  const onDecrement = () => dispatch(decrementAction());
 
   return (
     <div>

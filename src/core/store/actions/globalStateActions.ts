@@ -3,10 +3,10 @@ import {
   GlobalStateAction,
 } from '../action-types/globalStateActionTypes';
 
-export const globalStateInc = (): GlobalStateAction => ({
-  type: GlobalStateActionTypes.inc,
+export const incrementAction = (): GlobalStateAction => ({
+  type: GlobalStateActionTypes.Increment,
 });
 
-export const globalStateDec = (): GlobalStateAction => ({
-  type: GlobalStateActionTypes.dec,
+export const decrementAction = (): GlobalStateAction => ({
+  type: GlobalStateActionTypes.Decrement,
 });

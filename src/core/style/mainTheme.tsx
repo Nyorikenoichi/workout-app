@@ -10,7 +10,7 @@ export interface Theme {
 
 const mainTheme = {
   colors: {
-    background: '#FFFDF9',
+    background: '#E5E5E5',
   },
   fonts: ['Roboto'],
 };

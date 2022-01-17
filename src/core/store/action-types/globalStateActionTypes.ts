@@ -3,6 +3,6 @@ export interface GlobalStateAction {
 }
 
 export enum GlobalStateActionTypes {
-  inc = 'increment',
-  dec = 'decrement',
+  Increment = 'increment',
+  Decrement = 'decrement',
 }

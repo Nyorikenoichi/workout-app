@@ -6,11 +6,11 @@ import {
   ContextApp,
   initialState,
   globalStateReducer,
-} from '../store/reducers/globalStateReducer';
-import { MainTheme } from '../style/mainTheme';
-import GlobalStyles from '../style/globalStyle';
-import Authentication from '../../pages/auth/authentication';
-import MainRoutes from '../constants/mainRoutes';
+} from './core/store/reducers/globalStateReducer';
+import { MainTheme } from './core/style/mainTheme';
+import GlobalStyles from './core/style/globalStyle';
+import Authentication from './pages/auth/authentication';
+import MainRoutes from './core/constants/mainRoutes';
 
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
