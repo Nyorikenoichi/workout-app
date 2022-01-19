@@ -1,8 +1,10 @@
+import { User } from 'firebase/auth';
+
 export interface GlobalStateAction {
   type: string;
+  payload: User | null;
 }
 
 export enum GlobalStateActionTypes {
-  Increment = 'increment',
-  Decrement = 'decrement',
+  SetUser = 'set user',
 }

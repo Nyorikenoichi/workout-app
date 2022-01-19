@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { GlobalStateActionTypes } from '../action-types/globalStateActionTypes';
+import { User } from 'firebase/auth';
+import {
+  GlobalStateAction,
+  GlobalStateActionTypes,
+} from '../action-types/globalStateActionTypes';
 
 interface GlobalState {
-  count: number;
+  user: User | null;
 }
 
-interface Action {
-  type: string;
-}
-
-export const initialState: GlobalState = { count: 0 };
+export const initialState: GlobalState = { user: null };
 
 export const ContextApp = React.createContext<{
-  dispatch: React.Dispatch<Action>;
+  dispatch: React.Dispatch<GlobalStateAction>;
   state: GlobalState;
 }>({
   dispatch: () => {
@@ -21,12 +21,13 @@ export const ContextApp = React.createContext<{
   state: initialState,
 });
 
-export function globalStateReducer(state: GlobalState, action: Action) {
+export function globalStateReducer(
+  state: GlobalState,
+  action: GlobalStateAction
+) {
   switch (action.type) {
-    case GlobalStateActionTypes.Increment:
-      return { count: state.count + 1 };
-    case GlobalStateActionTypes.Decrement:
-      return { count: state.count - 1 };
+    case GlobalStateActionTypes.SetUser:
+      return { user: action.payload };
     default:
       throw new Error();
   }

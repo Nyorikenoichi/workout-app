@@ -2,28 +2,32 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { ChangeEvent, useContext, useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import FormContainer from '../../core/components/formContainer';
 import auth from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 
-export default function Authentication() {
+export default function Register() {
   const globalState = useContext(ContextApp);
 
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  const [registerEmail, setRegisterEmail] = useState('');
+  const [registerPassword, setRegisterPassword] = useState('');
 
   const handleLoginChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setLoginEmail(event.target.value);
+    setRegisterEmail(event.target.value);
   };
 
   const handlePasswordChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setLoginPassword(event.target.value);
+    setRegisterPassword(event.target.value);
   };
 
-  const login = async () => {
+  const register = async () => {
     try {
-      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+      await createUserWithEmailAndPassword(
+        auth,
+        registerEmail,
+        registerPassword
+      );
     } catch (error: any) {
       alert(error.message);
     }
@@ -46,8 +50,8 @@ export default function Authentication() {
         variant="outlined"
         onChange={handlePasswordChange}
       />
-      <Button variant="contained" onClick={login}>
-        Log in
+      <Button variant="contained" onClick={register}>
+        Sign up
       </Button>
     </FormContainer>
   );
