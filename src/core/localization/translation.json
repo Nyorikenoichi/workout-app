@@ -1,8 +1,20 @@
 {
   "en": {
     "translation": {
-      "mainTitle": "Workout App",
-      "exerciseTitle": "Exercises"
+      "main_title": "Workout App",
+      "exercise_title": "Exercise",
+      "auth_form_title": "Authentication form",
+      "register_form_title": "Registration form",
+      "login": "Login",
+      "password": "Password",
+      "log_in": "Log in",
+      "sign_up": "Sign up",
+      "sign_out": "Sign out",
+      "dont_have_account_1": "Don't have an account? ",
+      "dont_have_account_2": "Register now!",
+      "already_have_account_1": "Already have an account? ",
+      "already_have_account_2": "Log in!",
+      "current_user": "Current user is"
     }
   }
 }

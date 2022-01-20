@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import auth from '../../core/firebase/firebaseInit';
 
-export default function Workout() {
+export default function Exercise() {
   const { state } = useContext(ContextApp);
 
   const logout = async () => {
@@ -18,7 +18,7 @@ export default function Workout() {
 
   return (
     <div>
-      <Typography variant="h3">{t('main_title')}</Typography>
+      <Typography variant="h3">{t('exercise_title')}</Typography>
       <Typography>{`${t('current_user')} ${state.user?.email}`}</Typography>
       <Button variant="contained" onClick={logout}>
         {t('sign_out')}

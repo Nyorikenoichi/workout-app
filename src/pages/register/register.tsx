@@ -3,12 +3,18 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { ChangeEvent, useContext, useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { Link, Navigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import FormContainer from '../../core/components/formContainer';
 import auth from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
+import MainRoutes from '../../core/constants/mainRoutes';
 
 export default function Register() {
   const globalState = useContext(ContextApp);
+
+  const { t } = useTranslation();
 
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
@@ -28,31 +34,35 @@ export default function Register() {
         registerEmail,
         registerPassword
       );
+      // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      // eslint-disable-next-line no-alert
       alert(error.message);
     }
   };
 
   return globalState.state.user ? (
-    <>
-      <h1>You are already logged in</h1>
-      <p>{globalState.state.user.email}</p>
-    </>
+    <Navigate to={MainRoutes.main} />
   ) : (
     <FormContainer>
+      <Typography variant="h4">{t('register_form_title')}</Typography>
       <TextField
-        label="Login"
+        label={t('login')}
         variant="outlined"
         onChange={handleLoginChange}
       />
       <TextField
-        label="Password"
+        label={t('password')}
         variant="outlined"
         onChange={handlePasswordChange}
       />
       <Button variant="contained" onClick={register}>
-        Sign up
+        {t('sign_up')}
       </Button>
+      <Typography>
+        {t('already_have_account_1')}
+        <Link to={MainRoutes.auth}>{t('already_have_account_2')}</Link>
+      </Typography>
     </FormContainer>
   );
 }

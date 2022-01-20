@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { onAuthStateChanged } from 'firebase/auth';
 import {
   ContextApp,
@@ -14,20 +13,26 @@ import Authentication from './pages/auth/authentication';
 import MainRoutes from './core/constants/mainRoutes';
 import Register from './pages/register/register';
 import Workout from './pages/main/workout';
-import auth from './core/firebase/firebaseInit';
 import setUserAction from './core/store/actions/globalStateActions';
+import PrivateRoute from './core/components/PrivateRoute';
+import auth from './core/firebase/firebaseInit';
+import Exercise from './pages/excercise/excercise';
+import PageNotFound from './pages/page-not-found/pageNotFound';
 
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
-  const { t } = useTranslation();
-
-  const contextValue = useMemo(() => ({ dispatch, state }), [state]);
+  const [userLoggedIn, setUserLoginState] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       dispatch(setUserAction(currentUser));
+      setUserLoginState(true);
     });
   }, []);
+
+  const contextValue = useMemo(() => ({ dispatch, state }), [state]);
+
+  if (!userLoggedIn) return <div>there will be loader</div>;
 
   return (
     <MainTheme>
@@ -36,12 +41,13 @@ export default function App() {
           <Routes>
             <Route path={MainRoutes.auth} element={<Authentication />} />
             <Route path={MainRoutes.register} element={<Register />} />
-            <Route path={MainRoutes.main} element={<Workout />} />
-            <Route
-              path={MainRoutes.exercise}
-              element={<p>{t('exerciseTitle')}</p>}
-            />
-            <Route path="*" element={<p>Not found</p>} />
+            <Route path={MainRoutes.main} element={<PrivateRoute />}>
+              <Route path={MainRoutes.main} element={<Workout />} />
+            </Route>
+            <Route path={MainRoutes.exercise} element={<PrivateRoute />}>
+              <Route path={MainRoutes.exercise} element={<Exercise />} />
+            </Route>
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </Router>
         <GlobalStyles />

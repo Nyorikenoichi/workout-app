@@ -5,7 +5,7 @@ const FormContainer = styled.section`
   flex-direction: column;
   justify-content: space-around;
   width: 40%;
-  height: 250px;
+  height: 350px;
   margin: 20px;
 `;
 
