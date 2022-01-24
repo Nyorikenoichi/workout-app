@@ -1,12 +1,10 @@
 import { User } from 'firebase/auth';
 import {
-  GlobalStateAction,
+  GlobalStateActionType,
   GlobalStateActionTypes,
 } from '../action-types/globalStateActionTypes';
 
-const setUserAction = (user: User | null): GlobalStateAction => ({
+export const setUserAction = (user: User | null): GlobalStateActionType => ({
   type: GlobalStateActionTypes.SetUser,
   payload: user,
 });
-
-export default setUserAction;

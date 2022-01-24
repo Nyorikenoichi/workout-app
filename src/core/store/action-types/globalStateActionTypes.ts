@@ -1,10 +1,18 @@
 import { User } from 'firebase/auth';
 
-export interface GlobalStateAction {
-  type: string;
+export enum GlobalStateActionTypes {
+  SetUser = 'setUser',
+  SetLoading = 'SetLoading',
+}
+
+export interface SetUserActionType {
+  type: typeof GlobalStateActionTypes.SetUser;
   payload: User | null;
 }
 
-export enum GlobalStateActionTypes {
-  SetUser = 'set user',
+export interface SetLoadingActionType {
+  type: typeof GlobalStateActionTypes.SetLoading;
+  payload: { isLoading: boolean };
 }
+
+export type GlobalStateActionType = SetUserActionType | SetLoadingActionType;

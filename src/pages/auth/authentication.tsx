@@ -1,64 +1,104 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, FormEventHandler, useContext, useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link, Navigate } from 'react-router-dom';
-import { Typography } from '@mui/material';
+import { Alert, Dialog, DialogActions, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import FormContainer from '../../core/components/formContainer';
+import AuthFormContainer from '../components/authFormContainer';
 import auth from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import MainRoutes from '../../core/constants/mainRoutes';
+
+interface StateValues {
+  email: string;
+  password: string;
+}
+
+interface NotificationState {
+  open: boolean;
+  message: string;
+}
 
 export default function Authentication() {
   const { state } = useContext(ContextApp);
 
   const { t } = useTranslation();
 
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  const [notification, setNotification] = useState<NotificationState>({
+    open: false,
+    message: '',
+  });
 
-  const handleLoginChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setLoginEmail(event.target.value);
+  const showNotification = (errorMessage: string) => {
+    setNotification({
+      open: true,
+      message: errorMessage,
+    });
   };
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setLoginPassword(event.target.value);
+  const closeNotification = () => {
+    setNotification({
+      open: false,
+      message: '',
+    });
   };
 
-  const login = async () => {
+  const [values, setValues] = useState<StateValues>({
+    email: '',
+    password: '',
+  });
+
+  const onFormValueChange =
+    (key: keyof StateValues) => (event: ChangeEvent<HTMLInputElement>) => {
+      setValues((prevValues) => ({
+        ...prevValues,
+        [key]: event.target.value,
+      }));
+    };
+
+  const login: FormEventHandler<HTMLFormElement> = async (event) => {
+    event.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-      // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      // eslint-disable-next-line no-alert
-      alert(error.message);
+      await signInWithEmailAndPassword(auth, values.email, values.password);
+    } catch (error) {
+      showNotification((error as Error).message);
     }
   };
 
   return state.user ? (
     <Navigate to={MainRoutes.main} />
   ) : (
-    <FormContainer>
-      <Typography variant="h4">{t('auth_form_title')}</Typography>
-      <TextField
-        label={t('login')}
-        variant="outlined"
-        onChange={handleLoginChange}
-      />
-      <TextField
-        label={t('password')}
-        variant="outlined"
-        onChange={handlePasswordChange}
-      />
-      <Button variant="contained" onClick={login}>
-        {t('log_in')}
-      </Button>
-      <Typography>
-        {t('dont_have_account_1')}
-        <Link to={MainRoutes.register}>{t('dont_have_account_2')}</Link>
-      </Typography>
-    </FormContainer>
+    <>
+      <Dialog open={notification.open}>
+        <Alert severity="error">{notification.message}</Alert>
+        <DialogActions>
+          <Button onClick={closeNotification}>{t('close')}</Button>
+        </DialogActions>
+      </Dialog>
+      <AuthFormContainer onSubmit={login}>
+        <Typography variant="h4">{t('auth_form_title')}</Typography>
+        <TextField
+          type="email"
+          label={t('login')}
+          variant="outlined"
+          onChange={onFormValueChange('email')}
+        />
+        <TextField
+          type="password"
+          label={t('password')}
+          variant="outlined"
+          onChange={onFormValueChange('password')}
+        />
+        <Button variant="contained" type="submit">
+          {t('log_in')}
+        </Button>
+        <Typography>
+          {t('dont_have_account_1')}
+          <Link to={MainRoutes.register}>{t('dont_have_account_2')}</Link>
+        </Typography>
+      </AuthFormContainer>
+    </>
   );
 }

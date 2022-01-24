@@ -7,14 +7,19 @@
       "register_form_title": "Registration form",
       "login": "Login",
       "password": "Password",
+      "confirm_password": "Confirm password",
       "log_in": "Log in",
       "sign_up": "Sign up",
       "sign_out": "Sign out",
+      "close": "Close",
       "dont_have_account_1": "Don't have an account? ",
       "dont_have_account_2": "Register now!",
       "already_have_account_1": "Already have an account? ",
       "already_have_account_2": "Log in!",
-      "current_user": "Current user is"
+      "current_user": "Current user is",
+      "page_not_found": "Page not found!",
+      "back_to_main1": "Back to ",
+      "back_to_main2": "main page"
     }
   }
 }

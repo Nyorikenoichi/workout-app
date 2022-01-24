@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { User } from 'firebase/auth';
 import {
-  GlobalStateAction,
+  GlobalStateActionType,
   GlobalStateActionTypes,
 } from '../action-types/globalStateActionTypes';
 
@@ -12,7 +12,7 @@ interface GlobalState {
 export const initialState: GlobalState = { user: null };
 
 export const ContextApp = React.createContext<{
-  dispatch: React.Dispatch<GlobalStateAction>;
+  dispatch: React.Dispatch<GlobalStateActionType>;
   state: GlobalState;
 }>({
   dispatch: () => {
@@ -23,12 +23,15 @@ export const ContextApp = React.createContext<{
 
 export function globalStateReducer(
   state: GlobalState,
-  action: GlobalStateAction
+  action: GlobalStateActionType
 ) {
   switch (action.type) {
     case GlobalStateActionTypes.SetUser:
-      return { user: action.payload };
+      return {
+        ...state,
+        user: action.payload,
+      };
     default:
-      throw new Error();
+      return state;
   }
 }

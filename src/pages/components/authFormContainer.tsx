@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FormContainer = styled.section`
+const AuthFormContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -9,4 +9,4 @@ const FormContainer = styled.section`
   margin: 20px;
 `;
 
-export default FormContainer;
+export default AuthFormContainer;

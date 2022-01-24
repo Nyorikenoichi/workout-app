@@ -13,7 +13,7 @@ import Authentication from './pages/auth/authentication';
 import MainRoutes from './core/constants/mainRoutes';
 import Register from './pages/register/register';
 import Workout from './pages/main/workout';
-import setUserAction from './core/store/actions/globalStateActions';
+import { setUserAction } from './core/store/actions/globalStateActions';
 import PrivateRoute from './core/components/PrivateRoute';
 import auth from './core/firebase/firebaseInit';
 import Exercise from './pages/excercise/excercise';
