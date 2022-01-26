@@ -1,12 +1,10 @@
+import { User } from 'firebase/auth';
 import {
+  GlobalStateActionType,
   GlobalStateActionTypes,
-  GlobalStateAction,
 } from '../action-types/globalStateActionTypes';
 
-export const incrementAction = (): GlobalStateAction => ({
-  type: GlobalStateActionTypes.Increment,
-});
-
-export const decrementAction = (): GlobalStateAction => ({
-  type: GlobalStateActionTypes.Decrement,
+export const setUserAction = (user: User | null): GlobalStateActionType => ({
+  type: GlobalStateActionTypes.SetUser,
+  payload: user,
 });

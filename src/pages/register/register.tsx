@@ -2,11 +2,11 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { ChangeEvent, FormEventHandler, useContext, useState } from 'react';
-import { signInWithEmailAndPassword, AuthError } from 'firebase/auth';
+import { createUserWithEmailAndPassword, AuthError } from 'firebase/auth';
 import { Link, Navigate } from 'react-router-dom';
 import { Alert, Dialog, DialogActions, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import AuthFormContainer from '../components/authFormContainer';
+import RegisterFormContainer from './components/registerFormContainer';
 import auth from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import MainRoutes from '../../core/constants/mainRoutes';
@@ -15,10 +15,11 @@ import useNotification from '../../core/hooks/useNotification';
 interface StateValues {
   email: string;
   password: string;
+  confirmPassword: string;
 }
 
-export default function Authentication() {
-  const { state } = useContext(ContextApp);
+export default function Register() {
+  const globalState = useContext(ContextApp);
 
   const { t } = useTranslation();
 
@@ -27,6 +28,7 @@ export default function Authentication() {
   const [values, setValues] = useState<StateValues>({
     email: '',
     password: '',
+    confirmPassword: '',
   });
 
   const onFormValueChange =
@@ -37,16 +39,26 @@ export default function Authentication() {
       }));
     };
 
-  const login: FormEventHandler<HTMLFormElement> = async (event) => {
+  const register: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+      if (values.password !== values.confirmPassword) {
+        const error: AuthError = {
+          customData: { appName: '' },
+          stack: '',
+          message: '',
+          name: 'FirebaseError',
+          code: 'confirm-password-error',
+        };
+        throw error;
+      }
+      await createUserWithEmailAndPassword(auth, values.email, values.password);
     } catch (error) {
       showNotification(t((error as AuthError).code));
     }
   };
 
-  return state.user ? (
+  return globalState.state.user ? (
     <Navigate to={MainRoutes.main} />
   ) : (
     <>
@@ -56,8 +68,8 @@ export default function Authentication() {
           <Button onClick={closeNotification}>{t('close')}</Button>
         </DialogActions>
       </Dialog>
-      <AuthFormContainer onSubmit={login}>
-        <Typography variant="h4">{t('auth_form_title')}</Typography>
+      <RegisterFormContainer onSubmit={register}>
+        <Typography variant="h4">{t('register_form_title')}</Typography>
         <TextField
           type="email"
           label={t('login')}
@@ -70,14 +82,20 @@ export default function Authentication() {
           variant="outlined"
           onChange={onFormValueChange('password')}
         />
+        <TextField
+          type="password"
+          label={t('confirm_password')}
+          variant="outlined"
+          onChange={onFormValueChange('confirmPassword')}
+        />
         <Button variant="contained" type="submit">
-          {t('log_in')}
+          {t('sign_up')}
         </Button>
         <Typography>
-          {t('dont_have_account_1')}
-          <Link to={MainRoutes.register}>{t('dont_have_account_2')}</Link>
+          {t('already_have_account_1')}
+          <Link to={MainRoutes.auth}>{t('already_have_account_2')}</Link>
         </Typography>
-      </AuthFormContainer>
+      </RegisterFormContainer>
     </>
   );
 }
