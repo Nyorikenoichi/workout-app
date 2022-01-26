@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { ChangeEvent, FormEventHandler, useContext, useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, AuthError } from 'firebase/auth';
 import { Link, Navigate } from 'react-router-dom';
 import { Alert, Dialog, DialogActions, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -10,15 +10,11 @@ import AuthFormContainer from '../components/authFormContainer';
 import auth from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import MainRoutes from '../../core/constants/mainRoutes';
+import useNotification from '../../core/hooks/useNotification';
 
 interface StateValues {
   email: string;
   password: string;
-}
-
-interface NotificationState {
-  open: boolean;
-  message: string;
 }
 
 export default function Authentication() {
@@ -26,24 +22,7 @@ export default function Authentication() {
 
   const { t } = useTranslation();
 
-  const [notification, setNotification] = useState<NotificationState>({
-    open: false,
-    message: '',
-  });
-
-  const showNotification = (errorMessage: string) => {
-    setNotification({
-      open: true,
-      message: errorMessage,
-    });
-  };
-
-  const closeNotification = () => {
-    setNotification({
-      open: false,
-      message: '',
-    });
-  };
+  const [notification, showNotification, closeNotification] = useNotification();
 
   const [values, setValues] = useState<StateValues>({
     email: '',
@@ -63,7 +42,7 @@ export default function Authentication() {
     try {
       await signInWithEmailAndPassword(auth, values.email, values.password);
     } catch (error) {
-      showNotification((error as Error).message);
+      showNotification(t((error as AuthError).code));
     }
   };
 

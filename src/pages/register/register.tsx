@@ -2,7 +2,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { ChangeEvent, FormEventHandler, useContext, useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, AuthError } from 'firebase/auth';
 import { Link, Navigate } from 'react-router-dom';
 import { Alert, Dialog, DialogActions, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import RegisterFormContainer from './components/registerFormContainer';
 import auth from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import MainRoutes from '../../core/constants/mainRoutes';
+import useNotification from '../../core/hooks/useNotification';
 
 interface StateValues {
   email: string;
@@ -17,34 +18,12 @@ interface StateValues {
   confirmPassword: string;
 }
 
-interface NotificationState {
-  open: boolean;
-  message: string;
-}
-
 export default function Register() {
   const globalState = useContext(ContextApp);
 
   const { t } = useTranslation();
 
-  const [notification, setNotification] = useState<NotificationState>({
-    open: false,
-    message: '',
-  });
-
-  const showNotification = (errorMessage: string) => {
-    setNotification({
-      open: true,
-      message: errorMessage,
-    });
-  };
-
-  const closeNotification = () => {
-    setNotification({
-      open: false,
-      message: '',
-    });
-  };
+  const [notification, showNotification, closeNotification] = useNotification();
 
   const [values, setValues] = useState<StateValues>({
     email: '',
@@ -63,12 +42,19 @@ export default function Register() {
   const register: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     try {
-      if (values.password !== values.confirmPassword)
-        throw new Error('Passwords in fields must match!');
+      if (values.password !== values.confirmPassword) {
+        const error: AuthError = {
+          customData: { appName: '' },
+          stack: '',
+          message: '',
+          name: 'FirebaseError',
+          code: 'confirm-password-error',
+        };
+        throw error;
+      }
       await createUserWithEmailAndPassword(auth, values.email, values.password);
     } catch (error) {
-      console.log((error as Error).message);
-      showNotification((error as Error).message);
+      showNotification(t((error as AuthError).code));
     }
   };
 
