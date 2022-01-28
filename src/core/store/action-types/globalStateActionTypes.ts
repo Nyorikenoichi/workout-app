@@ -12,7 +12,7 @@ export interface SetUserActionType {
 
 export interface SetLoadingActionType {
   type: typeof GlobalStateActionTypes.SetLoading;
-  payload: { isLoading: boolean };
+  payload: boolean;
 }
 
 export type GlobalStateActionType = SetUserActionType | SetLoadingActionType;

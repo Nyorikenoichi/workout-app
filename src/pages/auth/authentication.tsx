@@ -7,7 +7,7 @@ import { Link, Navigate } from 'react-router-dom';
 import { Alert, Dialog, DialogActions, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import AuthFormContainer from '../components/authFormContainer';
-import auth from '../../core/firebase/firebaseInit';
+import { auth } from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import MainRoutes from '../../core/constants/mainRoutes';
 import useNotification from '../../core/hooks/useNotification';

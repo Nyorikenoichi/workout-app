@@ -6,8 +6,9 @@ import { createUserWithEmailAndPassword, AuthError } from 'firebase/auth';
 import { Link, Navigate } from 'react-router-dom';
 import { Alert, Dialog, DialogActions, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { setDoc, doc } from 'firebase/firestore';
 import RegisterFormContainer from './components/registerFormContainer';
-import auth from '../../core/firebase/firebaseInit';
+import { auth, db } from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import MainRoutes from '../../core/constants/mainRoutes';
 import useNotification from '../../core/hooks/useNotification';
@@ -52,7 +53,14 @@ export default function Register() {
         };
         throw error;
       }
-      await createUserWithEmailAndPassword(auth, values.email, values.password);
+      const cred = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      await setDoc(doc(db, 'users', cred.user.uid), {
+        someData: Math.random() * 100,
+      });
     } catch (error) {
       showNotification(t((error as AuthError).code));
     }

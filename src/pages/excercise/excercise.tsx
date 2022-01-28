@@ -5,7 +5,7 @@ import { signOut } from 'firebase/auth';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
-import auth from '../../core/firebase/firebaseInit';
+import { auth } from '../../core/firebase/firebaseInit';
 
 export default function Exercise() {
   const { state } = useContext(ContextApp);

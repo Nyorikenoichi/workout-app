@@ -7,9 +7,10 @@ import {
 
 interface GlobalState {
   user: User | null;
+  isLoading: boolean;
 }
 
-export const initialState: GlobalState = { user: null };
+export const initialState: GlobalState = { user: null, isLoading: true };
 
 export const ContextApp = React.createContext<{
   dispatch: React.Dispatch<GlobalStateActionType>;
@@ -30,6 +31,11 @@ export function globalStateReducer(
       return {
         ...state,
         user: action.payload,
+      };
+    case GlobalStateActionTypes.SetLoading:
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     default:
       return state;

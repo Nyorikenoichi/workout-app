@@ -13,26 +13,29 @@ import Authentication from './pages/auth/authentication';
 import MainRoutes from './core/constants/mainRoutes';
 import Register from './pages/register/register';
 import Workout from './pages/main/workout';
-import { setUserAction } from './core/store/actions/globalStateActions';
+import {
+  setLoadingAction,
+  setUserAction,
+} from './core/store/actions/globalStateActions';
 import PrivateRoute from './core/components/PrivateRoute';
-import auth from './core/firebase/firebaseInit';
+import { auth } from './core/firebase/firebaseInit';
 import Exercise from './pages/excercise/excercise';
 import PageNotFound from './pages/page-not-found/pageNotFound';
 
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
-  const [userLoggedIn, setUserLoginState] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
+      dispatch(setLoadingAction(true));
       dispatch(setUserAction(currentUser));
-      setUserLoginState(true);
+      dispatch(setLoadingAction(false));
     });
   }, []);
 
   const contextValue = useMemo(() => ({ dispatch, state }), [state]);
 
-  if (!userLoggedIn) return <div>there will be loader</div>;
+  if (state.isLoading) return <div>there will be loader</div>;
 
   return (
     <MainTheme>
