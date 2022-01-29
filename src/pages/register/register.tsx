@@ -2,7 +2,11 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { ChangeEvent, FormEventHandler, useContext, useState } from 'react';
-import { createUserWithEmailAndPassword, AuthError } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  AuthError,
+  updateProfile,
+} from 'firebase/auth';
 import { Link, Navigate } from 'react-router-dom';
 import { Alert, Dialog, DialogActions, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +18,7 @@ import MainRoutes from '../../core/constants/mainRoutes';
 import useNotification from '../../core/hooks/useNotification';
 
 interface StateValues {
+  userName: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -27,6 +32,7 @@ export default function Register() {
   const [notification, showNotification, closeNotification] = useNotification();
 
   const [values, setValues] = useState<StateValues>({
+    userName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -58,6 +64,9 @@ export default function Register() {
         values.email,
         values.password
       );
+      await updateProfile(cred.user, {
+        displayName: values.userName,
+      });
       await setDoc(doc(db, 'users', cred.user.uid), {
         someData: Math.random() * 100,
       });
@@ -79,8 +88,14 @@ export default function Register() {
       <RegisterFormContainer onSubmit={register}>
         <Typography variant="h4">{t('register_form_title')}</Typography>
         <TextField
+          type="text"
+          label={t('user_name')}
+          variant="outlined"
+          onChange={onFormValueChange('userName')}
+        />
+        <TextField
           type="email"
-          label={t('login')}
+          label={t('email')}
           variant="outlined"
           onChange={onFormValueChange('email')}
         />

@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
+import { Backdrop, CircularProgress } from '@mui/material';
 import {
+  augmentDispatch,
   ContextApp,
+  GlobalState,
   globalStateReducer,
   initialState,
 } from './core/store/reducers/globalStateReducer';
-import { MainTheme } from './core/style/mainTheme';
+import { MainTheme, Theme } from './core/style/mainTheme';
 import GlobalStyles from './core/style/globalStyle';
 import Authentication from './pages/auth/authentication';
 import MainRoutes from './core/constants/mainRoutes';
@@ -21,25 +24,44 @@ import PrivateRoute from './core/components/PrivateRoute';
 import { auth } from './core/firebase/firebaseInit';
 import Exercise from './pages/excercise/excercise';
 import PageNotFound from './pages/page-not-found/pageNotFound';
+import { GlobalStateActionType } from './core/store/action-types/globalStateActionTypes';
 
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
 
+  const contextValue = useMemo(
+    () => ({
+      dispatch: augmentDispatch<
+        GlobalStateActionType<Partial<GlobalState>>,
+        GlobalState
+      >(dispatch, state),
+      state,
+    }),
+    [state]
+  );
+
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      dispatch(setLoadingAction(true));
-      dispatch(setUserAction(currentUser));
-      dispatch(setLoadingAction(false));
+      dispatch(setLoadingAction({ isLoading: true }));
+      dispatch(setUserAction({ user: currentUser }));
+      dispatch(setLoadingAction({ isLoading: false }));
     });
   }, []);
-
-  const contextValue = useMemo(() => ({ dispatch, state }), [state]);
-
-  if (state.isLoading) return <div>there will be loader</div>;
 
   return (
     <MainTheme>
       <ContextApp.Provider value={contextValue}>
+        {state.isLoading && (
+          <Backdrop
+            sx={{
+              color: '#E5E5E5',
+              zIndex: (theme) => theme.zIndex.drawer + 1,
+            }}
+            open
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        )}
         <Router>
           <Routes>
             <Route path={MainRoutes.auth} element={<Authentication />} />
