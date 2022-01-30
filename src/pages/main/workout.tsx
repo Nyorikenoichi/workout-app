@@ -48,12 +48,8 @@ export default function Workout() {
     getData();
   }, []);
 
-  console.log(state);
-
   function renderCards(cards: ExerciseGroup[]): JSX.Element[] {
-    return cards.map((card) => (
-      <WorkoutCard key={card.title as string} card={card} />
-    ));
+    return cards.map((card) => <WorkoutCard key={card.title} card={card} />);
   }
 
   return (

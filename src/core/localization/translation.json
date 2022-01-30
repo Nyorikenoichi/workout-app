@@ -20,8 +20,7 @@
       "already_have_account_2": "Log in!",
       "current_user": "Current user is",
       "page_not_found": "Page not found!",
-      "back_to_main1": "Back to ",
-      "back_to_main2": "main page",
+      "back_to_main": "Back to main page",
 
       "auth/confirm-password-error": "Passwords in fields must match!",
       "auth/admin-restricted-operation": "This operation is restricted to administrators only.",
