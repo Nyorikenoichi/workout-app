@@ -6,7 +6,7 @@ const RegisterFormContainer = styled.form`
   justify-content: space-around;
   width: 40%;
   height: 400px;
-  margin: 20px;
+  margin-top: 100px;
 `;
 
 export default RegisterFormContainer;

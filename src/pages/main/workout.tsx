@@ -1,19 +1,16 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
-import Button from '@mui/material/Button';
-import { signOut } from 'firebase/auth';
-import { Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 import { doc, getDoc } from 'firebase/firestore';
-import { Link } from 'react-router-dom';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
-import { auth, db } from '../../core/firebase/firebaseInit';
-import MainRoutes from '../../core/constants/mainRoutes';
+import { db } from '../../core/firebase/firebaseInit';
 import {
   setFirebaseDataAction,
   setLoadingAction,
   setWorkoutDataAction,
 } from '../../core/store/actions/globalStateActions';
+import WorkoutCard from './components/workoutCard';
+import CardsWrapper from './components/cardsWrapper';
+import ExerciseGroup from '../../core/interfaces/exerciseGroup';
 
 export default function Workout() {
   const { state, dispatch } = useContext(ContextApp);
@@ -21,11 +18,11 @@ export default function Workout() {
   useEffect(() => {
     async function getWorkoutData() {
       const api = process.env.REACT_APP_WORKOUT_API as string;
-      let data = await fetch(api);
-      data = await data.json();
+      const response = await fetch(api);
+      const dataJson = await response.json();
       dispatch(
         setWorkoutDataAction({
-          workoutData: data as unknown as Record<string, unknown>,
+          workoutData: dataJson.data,
         })
       );
     }
@@ -36,7 +33,7 @@ export default function Workout() {
       const data = docSnap.data();
       dispatch(
         setFirebaseDataAction({
-          firebaseData: data as unknown as Record<string, unknown>,
+          firebaseData: data,
         })
       );
     }
@@ -53,24 +50,15 @@ export default function Workout() {
 
   console.log(state);
 
-  const logout = async () => {
-    await signOut(auth);
-  };
-
-  const { t } = useTranslation();
+  function renderCards(cards: ExerciseGroup[]): JSX.Element[] {
+    return cards.map((card) => (
+      <WorkoutCard key={card.title as string} card={card} />
+    ));
+  }
 
   return (
-    <div>
-      <Typography variant="h3">{t('main_title')}</Typography>
-      <Typography>{`${t('current_user')} ${
-        state.user?.displayName
-      } with email ${state.user?.email}`}</Typography>
-      <Button variant="contained" onClick={logout}>
-        {t('sign_out')}
-      </Button>
-      <Typography>
-        <Link to={MainRoutes.exercise}>go to exercise</Link>
-      </Typography>
-    </div>
+    <CardsWrapper>
+      {state.workoutData && renderCards(state.workoutData.questions)}
+    </CardsWrapper>
   );
 }

@@ -6,7 +6,7 @@ const AuthFormContainer = styled.form`
   justify-content: space-around;
   width: 40%;
   height: 350px;
-  margin: 20px;
+  margin-top: 100px;
 `;
 
 export default AuthFormContainer;

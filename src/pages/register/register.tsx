@@ -16,6 +16,7 @@ import { auth, db } from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import MainRoutes from '../../core/constants/mainRoutes';
 import useNotification from '../../core/hooks/useNotification';
+import { setLoadingAction } from '../../core/store/actions/globalStateActions';
 
 interface StateValues {
   userName: string;
@@ -25,7 +26,7 @@ interface StateValues {
 }
 
 export default function Register() {
-  const globalState = useContext(ContextApp);
+  const { state, dispatch } = useContext(ContextApp);
 
   const { t } = useTranslation();
 
@@ -49,6 +50,7 @@ export default function Register() {
   const register: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     try {
+      dispatch(setLoadingAction({ isLoading: true }));
       if (values.password !== values.confirmPassword) {
         const error: AuthError = {
           customData: { appName: '' },
@@ -75,7 +77,7 @@ export default function Register() {
     }
   };
 
-  return globalState.state.user ? (
+  return state.user ? (
     <Navigate to={MainRoutes.main} />
   ) : (
     <>

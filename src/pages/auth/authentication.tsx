@@ -6,7 +6,7 @@ import { signInWithEmailAndPassword, AuthError } from 'firebase/auth';
 import { Link, Navigate } from 'react-router-dom';
 import { Alert, Dialog, DialogActions, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import AuthFormContainer from '../components/authFormContainer';
+import AuthFormContainer from './components/authFormContainer';
 import { auth } from '../../core/firebase/firebaseInit';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import MainRoutes from '../../core/constants/mainRoutes';

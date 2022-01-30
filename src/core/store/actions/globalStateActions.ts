@@ -3,6 +3,7 @@ import {
   GlobalStateActionType,
   GlobalStateActionTypes,
 } from '../action-types/globalStateActionTypes';
+import WorkoutData from '../../interfaces/workoutData';
 
 export const setUserAction = (user: {
   user: User | null;
@@ -19,17 +20,17 @@ export const setLoadingAction = (isLoading: {
 });
 
 export const setFirebaseDataAction = (data: {
-  firebaseData: Record<string, unknown> | null;
+  firebaseData: Record<string, unknown> | null | undefined;
 }): GlobalStateActionType<{
-  firebaseData: Record<string, unknown> | null;
+  firebaseData: Record<string, unknown> | null | undefined;
 }> => ({
   type: GlobalStateActionTypes.SetFirebaseData,
   payload: data,
 });
 
 export const setWorkoutDataAction = (data: {
-  workoutData: Record<string, unknown> | null;
-}): GlobalStateActionType<{ workoutData: Record<string, unknown> | null }> => ({
+  workoutData: WorkoutData | null;
+}): GlobalStateActionType<{ workoutData: WorkoutData | null }> => ({
   type: GlobalStateActionTypes.SetWorkoutData,
   payload: data,
 });

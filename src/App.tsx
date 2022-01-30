@@ -10,7 +10,7 @@ import {
   globalStateReducer,
   initialState,
 } from './core/store/reducers/globalStateReducer';
-import { MainTheme, Theme } from './core/style/mainTheme';
+import { MainTheme } from './core/style/mainTheme';
 import GlobalStyles from './core/style/globalStyle';
 import Authentication from './pages/auth/authentication';
 import MainRoutes from './core/constants/mainRoutes';
@@ -25,6 +25,8 @@ import { auth } from './core/firebase/firebaseInit';
 import Exercise from './pages/excercise/excercise';
 import PageNotFound from './pages/page-not-found/pageNotFound';
 import { GlobalStateActionType } from './core/store/action-types/globalStateActionTypes';
+import Header from './core/components/header';
+import Body from './core/components/body';
 
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
@@ -42,7 +44,6 @@ export default function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      dispatch(setLoadingAction({ isLoading: true }));
       dispatch(setUserAction({ user: currentUser }));
       dispatch(setLoadingAction({ isLoading: false }));
     });
@@ -54,7 +55,6 @@ export default function App() {
         {state.isLoading && (
           <Backdrop
             sx={{
-              color: '#E5E5E5',
               zIndex: (theme) => theme.zIndex.drawer + 1,
             }}
             open
@@ -62,19 +62,22 @@ export default function App() {
             <CircularProgress color="inherit" />
           </Backdrop>
         )}
-        <Router>
-          <Routes>
-            <Route path={MainRoutes.auth} element={<Authentication />} />
-            <Route path={MainRoutes.register} element={<Register />} />
-            <Route path={MainRoutes.main} element={<PrivateRoute />}>
-              <Route path={MainRoutes.main} element={<Workout />} />
-            </Route>
-            <Route path={MainRoutes.exercise} element={<PrivateRoute />}>
-              <Route path={MainRoutes.exercise} element={<Exercise />} />
-            </Route>
-            <Route path="*" element={<PageNotFound />} />
-          </Routes>
-        </Router>
+        <Header />
+        <Body>
+          <Router>
+            <Routes>
+              <Route path={MainRoutes.auth} element={<Authentication />} />
+              <Route path={MainRoutes.register} element={<Register />} />
+              <Route path={MainRoutes.main} element={<PrivateRoute />}>
+                <Route path={MainRoutes.main} element={<Workout />} />
+              </Route>
+              <Route path={MainRoutes.exercise} element={<PrivateRoute />}>
+                <Route path={MainRoutes.exercise} element={<Exercise />} />
+              </Route>
+              <Route path="*" element={<PageNotFound />} />
+            </Routes>
+          </Router>
+        </Body>
         <GlobalStyles />
       </ContextApp.Provider>
     </MainTheme>

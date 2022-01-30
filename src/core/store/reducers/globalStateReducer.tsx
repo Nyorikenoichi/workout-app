@@ -6,6 +6,7 @@ import {
   GlobalStateActionTypes,
   Thunk,
 } from '../action-types/globalStateActionTypes';
+import WorkoutData from '../../interfaces/workoutData';
 
 export const augmentDispatch =
   <A, S>(dispatch: React.Dispatch<A>, state: S) =>
@@ -15,8 +16,8 @@ export const augmentDispatch =
 export interface GlobalState {
   user: User | null;
   isLoading: boolean;
-  firebaseData: Record<string, unknown> | null;
-  workoutData: Record<string, unknown> | null;
+  firebaseData: Record<string, unknown> | null | undefined;
+  workoutData: WorkoutData | null;
 }
 
 export const initialState: GlobalState = {
