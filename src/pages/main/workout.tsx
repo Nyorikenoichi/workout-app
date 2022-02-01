@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
+import { AuthError } from 'firebase/auth';
+import { useTranslation } from 'react-i18next';
+import { Alert, Dialog, DialogActions } from '@mui/material';
+import Button from '@mui/material/Button';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import { db } from '../../core/firebase/firebaseInit';
 import {
@@ -11,9 +15,14 @@ import {
 import WorkoutCard from './components/workoutCard';
 import CardsWrapper from './components/cardsWrapper';
 import ExerciseGroup from '../../core/interfaces/exerciseGroup';
+import useNotification from '../../core/hooks/useNotification';
 
 export default function Workout() {
   const { state, dispatch } = useContext(ContextApp);
+
+  const { t } = useTranslation();
+
+  const [notification, showNotification, closeNotification] = useNotification();
 
   useEffect(() => {
     async function getWorkoutData() {
@@ -45,7 +54,11 @@ export default function Workout() {
       dispatch(setLoadingAction({ isLoading: false }));
     }
 
-    getData();
+    try {
+      getData();
+    } catch (error) {
+      showNotification(t((error as AuthError).code));
+    }
   }, []);
 
   function renderCards(cards: ExerciseGroup[]): JSX.Element[] {
@@ -53,8 +66,16 @@ export default function Workout() {
   }
 
   return (
-    <CardsWrapper>
-      {state.workoutData && renderCards(state.workoutData.questions)}
-    </CardsWrapper>
+    <>
+      <Dialog open={notification.open}>
+        <Alert severity="error">{notification.message}</Alert>
+        <DialogActions>
+          <Button onClick={closeNotification}>{t('close')}</Button>
+        </DialogActions>
+      </Dialog>
+      <CardsWrapper>
+        {state.workoutData && renderCards(state.workoutData.questions)}
+      </CardsWrapper>
+    </>
   );
 }
