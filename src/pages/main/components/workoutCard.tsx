@@ -15,11 +15,11 @@ export default function WorkoutCard({ card }: WorkoutCardProps) {
         <CardMedia
           component="img"
           height="300"
-          image={card.exercises[0].photo as string}
+          image={card.exercises[0].photo}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {card.title as string}
+            {card.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {card.muscle_group.name}
