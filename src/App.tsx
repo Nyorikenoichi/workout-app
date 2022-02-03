@@ -26,7 +26,7 @@ import Exercise from './pages/excercise/excercise';
 import PageNotFound from './pages/page-not-found/pageNotFound';
 import { GlobalStateActionType } from './core/store/action-types/globalStateActionTypes';
 import Header from './core/components/header';
-import Body from './core/components/body';
+import Content from './core/components/content';
 
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
@@ -63,7 +63,7 @@ export default function App() {
           </Backdrop>
         )}
         <Header />
-        <Body>
+        <Content>
           <Router>
             <Routes>
               <Route path={MainRoutes.auth} element={<Authentication />} />
@@ -77,7 +77,7 @@ export default function App() {
               <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Router>
-        </Body>
+        </Content>
         <GlobalStyles />
       </ContextApp.Provider>
     </MainTheme>

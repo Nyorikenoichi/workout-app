@@ -11,7 +11,6 @@ export default createGlobalStyle`
   
   body {
     min-height: 100vh;
-    max-height: 100vh;
     background-color: ${(props: { theme: Theme }) =>
       props.theme.colors.background};
   }
@@ -22,6 +21,5 @@ export default createGlobalStyle`
     justify-content: flex-start;
     position: relative;
     height: 100%;
-    overflow: hidden;
   }
 `;

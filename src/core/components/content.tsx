@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const Body = styled.div`
+const Content = styled.div`
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -11,4 +11,4 @@ const Body = styled.div`
   padding: 0 160px;
 `;
 
-export default Body;
+export default Content;

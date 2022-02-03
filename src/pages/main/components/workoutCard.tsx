@@ -11,7 +11,7 @@ interface WorkoutCardProps {
 export default function WorkoutCard({ card }: WorkoutCardProps) {
   return (
     <Link to={MainRoutes.exercise} style={{ textDecoration: 'none' }}>
-      <Card sx={{ width: 300 }}>
+      <Card sx={{ width: 300, margin: '25px' }}>
         <CardMedia
           component="img"
           height="300"
