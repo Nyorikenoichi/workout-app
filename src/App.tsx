@@ -25,7 +25,7 @@ import { auth } from './core/firebase/firebaseInit';
 import Exercise from './pages/excercise/excercise';
 import PageNotFound from './pages/page-not-found/pageNotFound';
 import { GlobalStateActionType } from './core/store/action-types/globalStateActionTypes';
-import Header from './core/components/header';
+import Header from './core/components/header/header';
 import Content from './core/components/content';
 
 export default function App() {

@@ -17,14 +17,14 @@ export interface GlobalState {
   user: User | null;
   isLoading: boolean;
   firebaseData: Record<string, unknown> | null | undefined;
-  workoutData: WorkoutData | null;
+  workouts: WorkoutData | null;
 }
 
 export const initialState: GlobalState = {
   user: null,
   isLoading: true,
   firebaseData: null,
-  workoutData: null,
+  workouts: null,
 };
 
 export const ContextApp = React.createContext<{
@@ -60,7 +60,7 @@ export function globalStateReducer(
         ...state,
         ...action.payload,
       };
-    case GlobalStateActionTypes.SetWorkoutData:
+    case GlobalStateActionTypes.SetWorkouts:
       return {
         ...state,
         ...action.payload,

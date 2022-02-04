@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Alert, Dialog, DialogActions } from '@mui/material';
 import Button from '@mui/material/Button';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
-import { getBackendDataAction } from '../../core/store/actions/globalStateActions';
+import { getBackendDataAction } from '../../core/store/thunk/thunkActions';
 import WorkoutCard from './components/workoutCard';
 import CardsWrapper from './components/cardsWrapper';
 import ExerciseGroup from '../../core/interfaces/exerciseGroup';
@@ -39,7 +39,7 @@ export default function Workout() {
         </DialogActions>
       </Dialog>
       <CardsWrapper>
-        {state.workoutData && renderCards(state.workoutData.questions)}
+        {state.workouts && renderCards(state.workouts.questions)}
       </CardsWrapper>
     </>
   );

@@ -12,5 +12,5 @@ export enum GlobalStateActionTypes {
   SetUser = 'setUser',
   SetLoading = 'SetLoading',
   SetFirebaseData = 'setFirebaseData',
-  SetWorkoutData = 'setWorkoutData',
+  SetWorkouts = 'setWorkouts',
 }
