@@ -33,8 +33,6 @@ import ErrorMessage from './core/components/errorMessage';
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
 
-  const { t } = useTranslation();
-
   const contextValue = useMemo(
     () => ({
       dispatch: augmentDispatch<
