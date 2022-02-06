@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import MainRoutes from '../../../core/constants/mainRoutes';
+import { MainRoutes } from '../../../core/constants/mainRoutes';
 import ExerciseGroup from '../../../core/interfaces/exerciseGroup';
 
 interface WorkoutCardProps {

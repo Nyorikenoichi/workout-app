@@ -19,18 +19,25 @@ export const setLoadingAction = (isLoading: {
   payload: isLoading,
 });
 
-export const setFirebaseDataAction = (data: {
-  firebaseData: Record<string, unknown> | null | undefined;
+export const setStatisticsAction = (data: {
+  statistics: Record<string, unknown> | null | undefined;
 }): GlobalStateActionType<{
-  firebaseData: Record<string, unknown> | null | undefined;
+  statistics: Record<string, unknown> | null | undefined;
 }> => ({
-  type: GlobalStateActionTypes.SetFirebaseData,
+  type: GlobalStateActionTypes.SetStatistics,
   payload: data,
 });
 
 export const setWorkoutsAction = (data: {
   workouts: WorkoutData | null;
 }): GlobalStateActionType<{ workouts: WorkoutData | null }> => ({
+  type: GlobalStateActionTypes.SetWorkouts,
+  payload: data,
+});
+
+export const setErrorMessageAction = (data: {
+  errorMessage: string;
+}): GlobalStateActionType<{ errorMessage: string }> => ({
   type: GlobalStateActionTypes.SetWorkouts,
   payload: data,
 });

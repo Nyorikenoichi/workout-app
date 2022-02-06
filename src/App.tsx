@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { Backdrop, CircularProgress } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import {
   augmentDispatch,
   ContextApp,
@@ -13,7 +13,7 @@ import {
 import { MainTheme } from './core/style/mainTheme';
 import GlobalStyles from './core/style/globalStyle';
 import Authentication from './pages/auth/authentication';
-import MainRoutes from './core/constants/mainRoutes';
+import { MainRoutes } from './core/constants/mainRoutes';
 import Register from './pages/register/register';
 import Workout from './pages/main/workout';
 import {
@@ -27,9 +27,13 @@ import PageNotFound from './pages/page-not-found/pageNotFound';
 import { GlobalStateActionType } from './core/store/action-types/globalStateActionTypes';
 import Header from './core/components/header/header';
 import Content from './core/components/content';
+import Loader from './core/components/loader';
+import ErrorMessage from './core/components/errorMessage';
 
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
+
+  const { t } = useTranslation();
 
   const contextValue = useMemo(
     () => ({
@@ -44,6 +48,7 @@ export default function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
+      dispatch(setLoadingAction({ isLoading: true }));
       dispatch(setUserAction({ user: currentUser }));
       dispatch(setLoadingAction({ isLoading: false }));
     });
@@ -52,16 +57,8 @@ export default function App() {
   return (
     <MainTheme>
       <ContextApp.Provider value={contextValue}>
-        {state.isLoading && (
-          <Backdrop
-            sx={{
-              zIndex: (theme) => theme.zIndex.drawer + 1,
-            }}
-            open
-          >
-            <CircularProgress color="inherit" />
-          </Backdrop>
-        )}
+        {state.isLoading && <Loader />}
+        <ErrorMessage />
         <Header />
         <Content>
           <Router>

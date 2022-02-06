@@ -11,6 +11,7 @@ export type AugmentedDispatch<A, S> = React.Dispatch<Thunk<A, S> | A>;
 export enum GlobalStateActionTypes {
   SetUser = 'setUser',
   SetLoading = 'SetLoading',
-  SetFirebaseData = 'setFirebaseData',
+  SetStatistics = 'setStatistics',
   SetWorkouts = 'setWorkouts',
+  setErrorMessage = 'setErrorMessage',
 }

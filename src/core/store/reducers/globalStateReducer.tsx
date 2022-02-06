@@ -16,21 +16,23 @@ export const augmentDispatch =
 export interface GlobalState {
   user: User | null;
   isLoading: boolean;
-  firebaseData: Record<string, unknown> | null | undefined;
+  statistics: Record<string, unknown> | null | undefined;
   workouts: WorkoutData | null;
+  errorMessage: string;
 }
 
 export const initialState: GlobalState = {
   user: null,
   isLoading: true,
-  firebaseData: null,
+  statistics: null,
   workouts: null,
+  errorMessage: '',
 };
 
 export const ContextApp = React.createContext<{
   dispatch: AugmentedDispatch<
     GlobalStateActionType<Partial<GlobalState>>,
-    Partial<GlobalState>
+    GlobalState
   >;
   state: GlobalState;
 }>({
@@ -55,12 +57,17 @@ export function globalStateReducer(
         ...state,
         ...action.payload,
       };
-    case GlobalStateActionTypes.SetFirebaseData:
+    case GlobalStateActionTypes.SetStatistics:
       return {
         ...state,
         ...action.payload,
       };
     case GlobalStateActionTypes.SetWorkouts:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GlobalStateActionTypes.setErrorMessage:
       return {
         ...state,
         ...action.payload,
