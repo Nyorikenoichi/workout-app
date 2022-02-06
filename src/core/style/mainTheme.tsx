@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 export interface Theme {
   colors: {
     background: string;
+    backgroundDark: string;
   };
   fonts: string[];
 }
@@ -11,6 +12,7 @@ export interface Theme {
 const mainTheme = {
   colors: {
     background: '#E5E5E5',
+    backgroundDark: '#D9D9D9',
   },
   fonts: ['Roboto'],
 };
