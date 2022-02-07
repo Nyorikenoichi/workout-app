@@ -14,7 +14,7 @@ import GlobalStyles from './core/style/globalStyle';
 import Authentication from './pages/auth/authentication';
 import { MainRoutes } from './core/constants/mainRoutes';
 import Register from './pages/register/register';
-import Workout from './pages/main/workout';
+import Main from './pages/main/main';
 import {
   setLoadingAction,
   setUserAction,
@@ -27,7 +27,8 @@ import Header from './core/components/header/header';
 import Content from './core/components/content';
 import Loader from './core/components/loader';
 import ErrorMessage from './core/components/errorMessage';
-import WorkoutExercise from './pages/excercise/excercise';
+import Workout from './pages/workout/workout';
+import Exercises from './pages/excercise/excercises';
 
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
@@ -63,13 +64,16 @@ export default function App() {
               <Route path={MainRoutes.auth} element={<Authentication />} />
               <Route path={MainRoutes.register} element={<Register />} />
               <Route path={MainRoutes.main} element={<PrivateRoute />}>
-                <Route path={MainRoutes.main} element={<Workout />} />
+                <Route path={MainRoutes.main} element={<Main />} />
               </Route>
-              <Route path={MainRoutes.exercise} element={<PrivateRoute />}>
+              <Route path={MainRoutes.exerciseGroup} element={<PrivateRoute />}>
                 <Route
-                  path={MainRoutes.exercise}
-                  element={<WorkoutExercise />}
+                  path={MainRoutes.exerciseGroup}
+                  element={<Exercises />}
                 />
+              </Route>
+              <Route path={MainRoutes.workout} element={<PrivateRoute />}>
+                <Route path={MainRoutes.workout} element={<Workout />} />
               </Route>
               <Route path="*" element={<PageNotFound />} />
             </Routes>

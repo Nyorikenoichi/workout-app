@@ -19,7 +19,7 @@ export default function WorkoutCard({ card }: WorkoutCardProps) {
   };
 
   return (
-    <Link to={MainRoutes.exercise} style={{ textDecoration: 'none' }}>
+    <Link to={MainRoutes.exerciseGroup} style={{ textDecoration: 'none' }}>
       <Card sx={{ width: 300, margin: '25px' }} onClick={setCurrentExercises}>
         <CardMedia
           component="img"

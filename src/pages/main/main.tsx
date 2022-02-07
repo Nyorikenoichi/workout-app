@@ -6,7 +6,7 @@ import WorkoutCard from './components/workoutCard';
 import CardsWrapper from './components/cardsWrapper';
 import ExerciseGroup from '../../core/interfaces/exerciseGroup';
 
-export default function Workout() {
+export default function Main() {
   const { state, dispatch } = useContext(ContextApp);
 
   useEffect(() => {

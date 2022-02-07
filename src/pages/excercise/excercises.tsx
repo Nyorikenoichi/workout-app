@@ -15,7 +15,7 @@ import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import exerciseImage from '../../assets/images/exerciseImage.png';
 import Exercise from '../../core/interfaces/exercise';
 
-export default function WorkoutExercise() {
+export default function Exercises() {
   const { state } = useContext(ContextApp);
 
   const { t } = useTranslation();
@@ -47,7 +47,9 @@ export default function WorkoutExercise() {
       <img src={exerciseImage} alt="" />
       <Typography>{currentExerciseGroup?.title}</Typography>
       <List>{renderExercisesList()}</List>
-      <Button variant="contained">Start Exercise</Button>
+      <Link to={MainRoutes.workout}>
+        <Button variant="contained">Start Exercise</Button>
+      </Link>
     </>
   );
 }
