@@ -40,6 +40,7 @@ export const getBackendDataAction =
       dispatch(
         setErrorMessageAction({ errorMessage: (error as FirestoreError).code })
       );
+      console.log(error);
     } finally {
       dispatch(setLoadingAction({ isLoading: false }));
     }

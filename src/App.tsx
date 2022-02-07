@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useTranslation } from 'react-i18next';
 import {
   augmentDispatch,
   ContextApp,
