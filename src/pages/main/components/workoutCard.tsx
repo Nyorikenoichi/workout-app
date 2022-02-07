@@ -1,17 +1,26 @@
 import * as React from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 import { MainRoutes } from '../../../core/constants/mainRoutes';
 import ExerciseGroup from '../../../core/interfaces/exerciseGroup';
+import { setCurrentExerciseGroupAction } from '../../../core/store/actions/globalStateActions';
+import { ContextApp } from '../../../core/store/reducers/globalStateReducer';
 
 interface WorkoutCardProps {
   card: ExerciseGroup;
 }
 
 export default function WorkoutCard({ card }: WorkoutCardProps) {
+  const { dispatch } = useContext(ContextApp);
+
+  const setCurrentExercises = () => {
+    dispatch(setCurrentExerciseGroupAction({ currentExerciseGroup: card }));
+  };
+
   return (
     <Link to={MainRoutes.exercise} style={{ textDecoration: 'none' }}>
-      <Card sx={{ width: 300, margin: '25px' }}>
+      <Card sx={{ width: 300, margin: '25px' }} onClick={setCurrentExercises}>
         <CardMedia
           component="img"
           height="300"

@@ -7,6 +7,7 @@ import {
   Thunk,
 } from '../action-types/globalStateActionTypes';
 import WorkoutData from '../../interfaces/workoutData';
+import ExerciseGroup from '../../interfaces/exerciseGroup';
 
 export const augmentDispatch =
   <A, S>(dispatch: React.Dispatch<A>, state: S) =>
@@ -18,6 +19,7 @@ export interface GlobalState {
   isLoading: boolean;
   statistics: Record<string, unknown> | null | undefined;
   workouts: WorkoutData | null;
+  currentExerciseGroup: ExerciseGroup | null;
   errorMessage: string;
 }
 
@@ -26,6 +28,7 @@ export const initialState: GlobalState = {
   isLoading: true,
   statistics: null,
   workouts: null,
+  currentExerciseGroup: null,
   errorMessage: '',
 };
 
@@ -63,6 +66,11 @@ export function globalStateReducer(
         ...action.payload,
       };
     case GlobalStateActionTypes.SetWorkouts:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case GlobalStateActionTypes.SetCurrentExerciseGroup:
       return {
         ...state,
         ...action.payload,

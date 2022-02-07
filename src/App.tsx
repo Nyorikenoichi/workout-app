@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useTranslation } from 'react-i18next';
 import {
   augmentDispatch,
   ContextApp,
@@ -22,18 +21,16 @@ import {
 } from './core/store/actions/globalStateActions';
 import PrivateRoute from './core/components/PrivateRoute';
 import { auth } from './core/firebase/firebaseInit';
-import Exercise from './pages/excercise/excercise';
 import PageNotFound from './pages/page-not-found/pageNotFound';
 import { GlobalStateActionType } from './core/store/action-types/globalStateActionTypes';
 import Header from './core/components/header/header';
 import Content from './core/components/content';
 import Loader from './core/components/loader';
 import ErrorMessage from './core/components/errorMessage';
+import WorkoutExercise from './pages/excercise/excercise';
 
 export default function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
-
-  const { t } = useTranslation();
 
   const contextValue = useMemo(
     () => ({
@@ -69,7 +66,10 @@ export default function App() {
                 <Route path={MainRoutes.main} element={<Workout />} />
               </Route>
               <Route path={MainRoutes.exercise} element={<PrivateRoute />}>
-                <Route path={MainRoutes.exercise} element={<Exercise />} />
+                <Route
+                  path={MainRoutes.exercise}
+                  element={<WorkoutExercise />}
+                />
               </Route>
               <Route path="*" element={<PageNotFound />} />
             </Routes>

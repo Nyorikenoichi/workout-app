@@ -4,6 +4,7 @@ import {
   GlobalStateActionTypes,
 } from '../action-types/globalStateActionTypes';
 import WorkoutData from '../../interfaces/workoutData';
+import ExerciseGroup from '../../interfaces/exerciseGroup';
 
 export const setUserAction = (user: {
   user: User | null;
@@ -32,6 +33,13 @@ export const setWorkoutsAction = (data: {
   workouts: WorkoutData | null;
 }): GlobalStateActionType<{ workouts: WorkoutData | null }> => ({
   type: GlobalStateActionTypes.SetWorkouts,
+  payload: data,
+});
+
+export const setCurrentExerciseGroupAction = (data: {
+  currentExerciseGroup: ExerciseGroup | null;
+}): GlobalStateActionType<{ currentExerciseGroup: ExerciseGroup | null }> => ({
+  type: GlobalStateActionTypes.SetCurrentExerciseGroup,
   payload: data,
 });
 
