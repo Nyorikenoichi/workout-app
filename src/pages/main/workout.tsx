@@ -1,28 +1,25 @@
 import * as React from 'react';
-import { useContext } from 'react';
-import Button from '@mui/material/Button';
-import { signOut } from 'firebase/auth';
-import { Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { useContext, useEffect } from 'react';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
-import auth from '../../core/firebase/firebaseInit';
+import { getBackendDataAction } from '../../core/store/thunk/thunkActions';
+import WorkoutCard from './components/workoutCard';
+import CardsWrapper from './components/cardsWrapper';
+import ExerciseGroup from '../../core/interfaces/exerciseGroup';
 
 export default function Workout() {
-  const { state } = useContext(ContextApp);
+  const { state, dispatch } = useContext(ContextApp);
 
-  const logout = async () => {
-    await signOut(auth);
-  };
+  useEffect(() => {
+    dispatch(getBackendDataAction());
+  }, []);
 
-  const { t } = useTranslation();
+  function renderCards(cards: ExerciseGroup[]): JSX.Element[] {
+    return cards.map((card) => <WorkoutCard key={card.title} card={card} />);
+  }
 
   return (
-    <div>
-      <Typography variant="h3">{t('main_title')}</Typography>
-      <Typography>{`${t('current_user')} ${state.user?.email}`}</Typography>
-      <Button variant="contained" onClick={logout}>
-        {t('sign_out')}
-      </Button>
-    </div>
+    <CardsWrapper>
+      {state.workouts && renderCards(state.workouts.questions)}
+    </CardsWrapper>
   );
 }

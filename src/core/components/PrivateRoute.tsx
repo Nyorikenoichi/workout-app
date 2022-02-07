@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { ContextApp } from '../store/reducers/globalStateReducer';
-import MainRoutes from '../constants/mainRoutes';
+import { MainRoutes } from '../constants/mainRoutes';
 
 export default function PrivateRoute() {
   const { state } = useContext(ContextApp);

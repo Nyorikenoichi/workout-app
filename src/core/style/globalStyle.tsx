@@ -2,9 +2,15 @@ import { createGlobalStyle } from 'styled-components';
 import { Theme } from './mainTheme';
 
 export default createGlobalStyle`
-  body, #root {
+  html, body {
+    position: relative;
+    height: 100%;
     padding: 0;
     margin: 0;
+  }
+  
+  body {
+    min-height: 100vh;
     background-color: ${(props: { theme: Theme }) =>
       props.theme.colors.background};
   }
@@ -12,6 +18,8 @@ export default createGlobalStyle`
   #root {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    height: 100%;
   }
 `;
