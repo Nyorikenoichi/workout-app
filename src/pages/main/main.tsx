@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
-import { getBackendDataAction } from '../../core/store/thunk/thunkActions';
 import WorkoutCard from './components/workoutCard';
 import CardsWrapper from './components/cardsWrapper';
 import ExerciseGroup from '../../core/interfaces/exerciseGroup';
+import { getInitialDataAction } from '../../core/store/thunk/firestore';
 
 export default function Main() {
   const { state, dispatch } = useContext(ContextApp);
 
   useEffect(() => {
-    dispatch(getBackendDataAction());
+    dispatch(getInitialDataAction());
   }, []);
 
   function renderCards(cards: ExerciseGroup[]): JSX.Element[] {

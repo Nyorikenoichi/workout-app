@@ -4,6 +4,7 @@ import { Button, Typography } from '@mui/material';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import { ControllsContainer } from './components/controllsContainer';
 import { Progress } from './components/progress';
+import { FinishTraining } from './components/finishTraining';
 
 export default function Workout() {
   const { state, dispatch } = useContext(ContextApp);
@@ -17,12 +18,16 @@ export default function Workout() {
   const [counter, setCounter] = useState(5);
   const [timerPaused, setTimerPaused] = useState(false);
   const [isPreparing, setPreparing] = useState(true);
+  const [totalTime, setTotalTime] = useState(0);
+  const [trainingFinished, setTrainingFinished] = useState(false);
 
   const nextExercise = () => {
     if (currentExerciseIndex < exercisesCount - 1) {
       setCurrentExerciseIndex((index) => index + 1);
       setCounter(5);
       setPreparing(true);
+    } else {
+      setTrainingFinished(true);
     }
   };
 
@@ -51,6 +56,7 @@ export default function Workout() {
     if (!timerPaused) {
       timer = setTimeout(() => setCounter((c) => c - 1), 1000);
     }
+    setTotalTime((time) => time + 1);
 
     return () => {
       if (timer) {
@@ -59,7 +65,9 @@ export default function Workout() {
     };
   }, [counter, timerPaused]);
 
-  return (
+  return trainingFinished ? (
+    <FinishTraining time={totalTime} />
+  ) : (
     <>
       <Typography>
         {isPreparing ? 'Get ready' : currentExercise?.title}

@@ -5,45 +5,23 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
-import { FirestoreError, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import {
   GlobalStateActionType,
   Thunk,
 } from '../action-types/globalStateActionTypes';
 import { GlobalState } from '../reducers/globalStateReducer';
-import { auth, db } from '../../firebase/firebaseInit';
 import {
   setErrorMessageAction,
   setLoadingAction,
   setStatisticsAction,
   setWorkoutsAction,
 } from '../actions/globalStateActions';
-import { getWorkouts } from '../../api/workouts';
-import { getStatistics } from '../../api/statistics';
+import { auth, db } from '../../firebase/firebaseInit';
 import {
   AuthFormValues,
   RegisterFormValues,
 } from '../../interfaces/formValues';
-
-export const getBackendDataAction =
-  (): Thunk<GlobalStateActionType<Partial<GlobalState>>, GlobalState> =>
-  async (dispatch, state) => {
-    try {
-      dispatch(setLoadingAction({ isLoading: true }));
-
-      const workouts = await getWorkouts();
-      const statistics = await getStatistics(state);
-
-      dispatch(setWorkoutsAction({ workouts }));
-      dispatch(setStatisticsAction({ statistics }));
-    } catch (error) {
-      dispatch(
-        setErrorMessageAction({ errorMessage: (error as FirestoreError).code })
-      );
-    } finally {
-      dispatch(setLoadingAction({ isLoading: false }));
-    }
-  };
 
 export const logOutAction =
   (): Thunk<GlobalStateActionType<Partial<GlobalState>>, GlobalState> =>

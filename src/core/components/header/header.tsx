@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import { ContextApp } from '../../store/reducers/globalStateReducer';
 import HeaderContainer from './components/HeaderContainer';
 import Logout from './components/logout';
-import { logOutAction } from '../../store/thunk/thunkActions';
+import { logOutAction } from '../../store/thunk/auth';
 
 export default function Header() {
   const { t } = useTranslation();

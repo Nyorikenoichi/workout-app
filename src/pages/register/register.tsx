@@ -9,7 +9,7 @@ import RegisterFormContainer from './components/registerFormContainer';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import { MainRoutes } from '../../core/constants/mainRoutes';
 import { RegisterFormValues } from '../../core/interfaces/formValues';
-import { registerAction } from '../../core/store/thunk/thunkActions';
+import { registerAction } from '../../core/store/thunk/auth';
 
 export default function Register() {
   const { state, dispatch } = useContext(ContextApp);
