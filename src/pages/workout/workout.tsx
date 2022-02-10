@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { Button, Typography } from '@mui/material';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
-import { ControllsContainer } from './components/controllsContainer';
+import { ControllsContainer } from './components/styled/controllsContainer';
 import { Progress } from './components/progress';
 import { FinishTraining } from './components/finishTraining';
 
@@ -10,16 +10,15 @@ export default function Workout() {
   const { state, dispatch } = useContext(ContextApp);
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+  const [exerciseCounter, setCounter] = useState(5);
+  const [totalTime, setTotalTime] = useState(0);
+  const [timerPaused, setTimerPaused] = useState(false);
+  const [isPreparing, setPreparing] = useState(true);
+  const [trainingFinished, setTrainingFinished] = useState(false);
 
   const currentExercise =
     state.currentExerciseGroup?.exercises[currentExerciseIndex];
   const exercisesCount = state.currentExerciseGroup?.exercises.length as number;
-
-  const [counter, setCounter] = useState(5);
-  const [timerPaused, setTimerPaused] = useState(false);
-  const [isPreparing, setPreparing] = useState(true);
-  const [totalTime, setTotalTime] = useState(0);
-  const [trainingFinished, setTrainingFinished] = useState(false);
 
   const nextExercise = () => {
     if (currentExerciseIndex < exercisesCount - 1) {
@@ -44,26 +43,35 @@ export default function Workout() {
   };
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (counter === 0 && isPreparing) {
+    if (exerciseCounter === 0 && isPreparing) {
       setPreparing(false);
       setCounter(currentExercise?.duration as number);
     }
-    if (counter === 0 && !isPreparing) {
+    if (exerciseCounter === 0 && !isPreparing) {
       nextExercise();
     }
 
-    if (!timerPaused) {
-      timer = setTimeout(() => setCounter((c) => c - 1), 1000);
-    }
-    setTotalTime((time) => time + 1);
+    const timer = setTimeout(() => {
+      if (!timerPaused) {
+        setCounter((c) => c - 1);
+      }
+      setTotalTime((time) => time + 1);
+    }, 1000);
 
     return () => {
       if (timer) {
         clearTimeout(timer);
       }
     };
-  }, [counter, timerPaused]);
+  }, [totalTime]);
+
+  const convertCounterToPercent = () => {
+    return (
+      100 -
+      (100 * exerciseCounter) /
+        (isPreparing ? 5 : (currentExercise?.duration as number))
+    );
+  };
 
   return trainingFinished ? (
     <FinishTraining time={totalTime} />
@@ -75,22 +83,15 @@ export default function Workout() {
       <ControllsContainer>
         <Button onClick={prevExercise}>prev</Button>
         <Progress
-          progressValue={
-            100 -
-            (100 * counter) /
-              (isPreparing ? 5 : (currentExercise?.duration as number))
-          }
-          displayValue={counter}
+          progressValue={convertCounterToPercent()}
+          displayValue={exerciseCounter}
+          isPaused={timerPaused}
         />
         <Button onClick={nextExercise}>next</Button>
       </ControllsContainer>
-      {isPreparing ? (
-        <img src={currentExercise?.photo} alt="" />
-      ) : (
-        <video src={currentExercise?.video} autoPlay loop>
-          <track kind="captions" />
-        </video>
-      )}
+      <video src={currentExercise?.video} autoPlay loop>
+        <track kind="captions" />
+      </video>
       <Button onClick={switchPause}>Pause</Button>
     </>
   );
