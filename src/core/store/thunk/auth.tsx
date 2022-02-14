@@ -22,6 +22,8 @@ import {
   AuthFormValues,
   RegisterFormValues,
 } from '../../interfaces/formValues';
+import { exerciseGroupNames } from '../../constants/exerciseGroupNames';
+import { Statistics } from '../../interfaces/statistics';
 
 export const logOutAction =
   (): Thunk<GlobalStateActionType<Partial<GlobalState>>, GlobalState> =>
@@ -85,9 +87,16 @@ export const registerAction =
       await updateProfile(cred.user, {
         displayName: values.userName,
       });
-      await setDoc(doc(db, 'users', cred.user.uid), {
-        someData: Math.random() * 100,
+
+      const initialStatistics: Statistics = {
+        exercisesPerformedCount: {},
+      };
+      const exercises = Object.values(exerciseGroupNames) as string[];
+      exercises.forEach((exercise) => {
+        initialStatistics.exercisesPerformedCount[exercise] = 0;
       });
+
+      await setDoc(doc(db, 'users', cred.user.uid), initialStatistics);
     } catch (error) {
       dispatch(
         setErrorMessageAction({ errorMessage: (error as AuthError).code })

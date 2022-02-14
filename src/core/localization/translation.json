@@ -23,6 +23,10 @@
       "back_to_main": "Back to main page",
       "back_to_main1": "Back to ",
       "back_to_main2": "main page",
+      "workout_complete": "Workout Complete!",
+      "workout_summary": "Nice job. You’re done. Here’s the workout summary.",
+      "save_and_continue": "Save & Continue",
+      "times_complete": "Times complete: ",
 
       "auth/confirm-password-error": "Passwords in fields must match!",
       "auth/admin-restricted-operation": "This operation is restricted to administrators only.",

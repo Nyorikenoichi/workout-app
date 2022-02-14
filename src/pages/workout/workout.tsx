@@ -20,10 +20,13 @@ export default function Workout() {
     state.currentExerciseGroup?.exercises[currentExerciseIndex];
   const exercisesCount = state.currentExerciseGroup?.exercises.length as number;
 
+  const preparingDuration = 5;
+  const oneSecond = 1000;
+
   const nextExercise = () => {
     if (currentExerciseIndex < exercisesCount - 1) {
       setCurrentExerciseIndex((index) => index + 1);
-      setCounter(5);
+      setCounter(preparingDuration);
       setPreparing(true);
     } else {
       setTrainingFinished(true);
@@ -33,7 +36,7 @@ export default function Workout() {
   const prevExercise = () => {
     if (currentExerciseIndex > 0) {
       setCurrentExerciseIndex((index) => index - 1);
-      setCounter(5);
+      setCounter(preparingDuration);
       setPreparing(true);
     }
   };
@@ -56,7 +59,7 @@ export default function Workout() {
         setCounter((c) => c - 1);
       }
       setTotalTime((time) => time + 1);
-    }, 1000);
+    }, oneSecond);
 
     return () => {
       if (timer) {
@@ -69,7 +72,9 @@ export default function Workout() {
     return (
       100 -
       (100 * exerciseCounter) /
-        (isPreparing ? 5 : (currentExercise?.duration as number))
+        (isPreparing
+          ? preparingDuration
+          : (currentExercise?.duration as number))
     );
   };
 

@@ -1,12 +1,5 @@
 import * as React from 'react';
-import {
-  Button,
-  Icon,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from '@mui/material';
+import { Button, List, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
@@ -14,6 +7,7 @@ import { MainRoutes } from '../../core/constants/mainRoutes';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import exerciseImage from '../../assets/images/exerciseImage.png';
 import Exercise from '../../core/interfaces/exercise';
+import { ExercisesListItem } from './components/ExercisesListItem';
 
 export default function Exercises() {
   const { state } = useContext(ContextApp);
@@ -24,18 +18,7 @@ export default function Exercises() {
 
   const renderExercisesList = () => {
     return currentExerciseGroup?.exercises.map((item: Exercise) => {
-      return (
-        <ListItem key={item.id}>
-          <Icon>
-            <img src={item.photo} height={25} width={25} alt="" />
-          </Icon>
-          <ListItemText
-            primary={item.title}
-            secondary={`${item.duration} sec`}
-          />
-          ;
-        </ListItem>
-      );
+      return <ExercisesListItem item={item} key={item.id} />;
     });
   };
 

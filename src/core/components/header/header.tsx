@@ -13,7 +13,7 @@ export default function Header() {
 
   const { state, dispatch } = useContext(ContextApp);
 
-  const logout = async () => {
+  const onLogout = () => {
     dispatch(logOutAction());
   };
 
@@ -23,7 +23,7 @@ export default function Header() {
       {!!state.user && (
         <Logout>
           <Typography variant="h5">{state.user?.displayName}</Typography>
-          <Button variant="contained" onClick={logout}>
+          <Button variant="contained" onClick={onLogout}>
             {t('sign_out')}
           </Button>
         </Logout>

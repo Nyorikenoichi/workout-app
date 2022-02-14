@@ -5,6 +5,7 @@ import {
 } from '../action-types/globalStateActionTypes';
 import WorkoutData from '../../interfaces/workoutData';
 import ExerciseGroup from '../../interfaces/exerciseGroup';
+import { Statistics } from '../../interfaces/statistics';
 
 export const setUserAction = (user: {
   user: User | null;
@@ -21,9 +22,9 @@ export const setLoadingAction = (isLoading: {
 });
 
 export const setStatisticsAction = (data: {
-  statistics: Record<string, unknown> | null | undefined;
+  statistics: Statistics | null | undefined;
 }): GlobalStateActionType<{
-  statistics: Record<string, unknown> | null | undefined;
+  statistics: Statistics | null | undefined;
 }> => ({
   type: GlobalStateActionTypes.SetStatistics,
   payload: data,

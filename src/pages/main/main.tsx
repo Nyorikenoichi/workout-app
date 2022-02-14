@@ -10,12 +10,20 @@ export default function Main() {
   const { state, dispatch } = useContext(ContextApp);
 
   useEffect(() => {
-    dispatch(getInitialDataAction());
+    if (!state.workouts && !state.statistics) {
+      dispatch(getInitialDataAction());
+    }
   }, []);
 
-  function renderCards(cards: ExerciseGroup[]): JSX.Element[] {
-    return cards.map((card) => <WorkoutCard key={card.title} card={card} />);
-  }
+  const renderCards = (cards: ExerciseGroup[]): JSX.Element[] => {
+    return cards.map((card) => (
+      <WorkoutCard
+        key={card.title}
+        card={card}
+        completeCount={state.statistics?.exercisesPerformedCount[card.title]}
+      />
+    ));
+  };
 
   return (
     <CardsWrapper>

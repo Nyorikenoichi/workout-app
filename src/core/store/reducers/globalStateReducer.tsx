@@ -8,6 +8,7 @@ import {
 } from '../action-types/globalStateActionTypes';
 import WorkoutData from '../../interfaces/workoutData';
 import ExerciseGroup from '../../interfaces/exerciseGroup';
+import { Statistics } from '../../interfaces/statistics';
 
 export const augmentDispatch =
   <A, S>(dispatch: React.Dispatch<A>, state: S) =>
@@ -17,7 +18,7 @@ export const augmentDispatch =
 export interface GlobalState {
   user: User | null;
   isLoading: boolean;
-  statistics: Record<string, unknown> | null | undefined;
+  statistics: Statistics | null | undefined;
   workouts: WorkoutData | null;
   currentExerciseGroup: ExerciseGroup | null;
   errorMessage: string;
