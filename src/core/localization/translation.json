@@ -27,6 +27,7 @@
       "workout_summary": "Nice job. You’re done. Here’s the workout summary.",
       "save_and_continue": "Save & Continue",
       "times_complete": "Times complete: ",
+      "start_exercise": "Start exercise",
 
       "auth/confirm-password-error": "Passwords in fields must match!",
       "auth/admin-restricted-operation": "This operation is restricted to administrators only.",

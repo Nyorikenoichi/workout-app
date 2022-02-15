@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button, List, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
 import { MainRoutes } from '../../core/constants/mainRoutes';
@@ -9,11 +9,14 @@ import exerciseImage from '../../assets/images/exerciseImage.png';
 import Exercise from '../../core/interfaces/exercise';
 import { ExercisesListItem } from './components/ExercisesListItem';
 import ExercisesWrapper from './components/exercisesWrapper';
+import { StartWorkoutButton } from './components/startWorkoutButton';
 
 export default function Exercises() {
   const { state } = useContext(ContextApp);
 
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
 
   const { currentExerciseGroup } = state;
 
@@ -23,17 +26,23 @@ export default function Exercises() {
     });
   };
 
+  const onStartWorkout = () => {
+    navigate(MainRoutes.workout);
+  };
+
   return (
-    <ExercisesWrapper>
-      <Typography>
-        <Link to={MainRoutes.main}>{t('back_to_main')}</Link>
-      </Typography>
-      <img src={exerciseImage} alt="" />
-      <Typography>{currentExerciseGroup?.title}</Typography>
-      <List>{renderExercisesList()}</List>
-      <Link to={MainRoutes.workout}>
-        <Button variant="contained">Start Exercise</Button>
-      </Link>
-    </ExercisesWrapper>
+    <>
+      <ExercisesWrapper>
+        <Typography>
+          <Link to={MainRoutes.main}>{t('back_to_main')}</Link>
+        </Typography>
+        <img src={exerciseImage} alt="" />
+        <Typography>{currentExerciseGroup?.title}</Typography>
+        <List>{renderExercisesList()}</List>
+      </ExercisesWrapper>
+      <StartWorkoutButton variant="contained" onClick={onStartWorkout}>
+        {t('start_exercise')}
+      </StartWorkoutButton>
+    </>
   );
 }
