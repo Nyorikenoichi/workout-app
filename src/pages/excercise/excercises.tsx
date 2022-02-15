@@ -8,6 +8,7 @@ import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import exerciseImage from '../../assets/images/exerciseImage.png';
 import Exercise from '../../core/interfaces/exercise';
 import { ExercisesListItem } from './components/ExercisesListItem';
+import ExercisesWrapper from './components/exercisesWrapper';
 
 export default function Exercises() {
   const { state } = useContext(ContextApp);
@@ -23,7 +24,7 @@ export default function Exercises() {
   };
 
   return (
-    <>
+    <ExercisesWrapper>
       <Typography>
         <Link to={MainRoutes.main}>{t('back_to_main')}</Link>
       </Typography>
@@ -33,6 +34,6 @@ export default function Exercises() {
       <Link to={MainRoutes.workout}>
         <Button variant="contained">Start Exercise</Button>
       </Link>
-    </>
+    </ExercisesWrapper>
   );
 }

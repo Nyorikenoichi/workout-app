@@ -1,18 +1,22 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import { Button, Typography } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import PauseCircleIcon from '@mui/icons-material/PauseCircle';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import { ControllsContainer } from './components/styled/controllsContainer';
 import { Progress } from './components/progress';
 import { FinishTraining } from './components/finishTraining';
 
 export default function Workout() {
-  const { state, dispatch } = useContext(ContextApp);
+  const { state } = useContext(ContextApp);
 
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [exerciseCounter, setCounter] = useState(5);
   const [totalTime, setTotalTime] = useState(0);
-  const [timerPaused, setTimerPaused] = useState(false);
+  const [isPaused, setPaused] = useState(false);
   const [isPreparing, setPreparing] = useState(true);
   const [trainingFinished, setTrainingFinished] = useState(false);
 
@@ -42,7 +46,7 @@ export default function Workout() {
   };
 
   const switchPause = () => {
-    setTimerPaused((pause) => !pause);
+    setPaused((pause) => !pause);
   };
 
   useEffect(() => {
@@ -55,7 +59,7 @@ export default function Workout() {
     }
 
     const timer = setTimeout(() => {
-      if (!timerPaused) {
+      if (!isPaused) {
         setCounter((c) => c - 1);
       }
       setTotalTime((time) => time + 1);
@@ -86,18 +90,28 @@ export default function Workout() {
         {isPreparing ? 'Get ready' : currentExercise?.title}
       </Typography>
       <ControllsContainer>
-        <Button onClick={prevExercise}>prev</Button>
+        <Button onClick={prevExercise} variant="outlined">
+          <SkipPreviousIcon />
+        </Button>
         <Progress
           progressValue={convertCounterToPercent()}
           displayValue={exerciseCounter}
-          isPaused={timerPaused}
+          isPaused={isPaused}
         />
-        <Button onClick={nextExercise}>next</Button>
+        <Button onClick={nextExercise} variant="outlined">
+          <SkipNextIcon />
+        </Button>
       </ControllsContainer>
       <video src={currentExercise?.video} autoPlay loop>
         <track kind="captions" />
       </video>
-      <Button onClick={switchPause}>Pause</Button>
+      <IconButton onClick={switchPause}>
+        {isPaused ? (
+          <PlayCircleIcon fontSize="large" />
+        ) : (
+          <PauseCircleIcon fontSize="large" />
+        )}
+      </IconButton>
     </>
   );
 }
