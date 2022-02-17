@@ -5,8 +5,8 @@ export interface Theme {
   colors: {
     background: string;
     backgroundDark: string;
-    workoutSpinner: string;
-    workoutSpinnerSecondary: string;
+    workoutSpinnerBar: string;
+    workoutSpinnerBackground: string;
     workoutSpinnerPaused: string;
     buttonsBackground: string;
   };
@@ -17,8 +17,8 @@ const mainTheme = {
   colors: {
     background: '#E5E5E5',
     backgroundDark: '#D9D9D9',
-    workoutSpinner: '#1DE9B6',
-    workoutSpinnerSecondary: '#EEEEEE',
+    workoutSpinnerBar: '#1DE9B6',
+    workoutSpinnerBackground: '#EEEEEE',
     buttonsBackground: '#AA00FF',
   },
   fonts: ['Roboto'],

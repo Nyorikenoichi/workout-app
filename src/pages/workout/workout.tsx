@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext } from 'react';
 import { IconButton, Typography } from '@mui/material';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import SkipNextIcon from '@mui/icons-material/SkipNext';

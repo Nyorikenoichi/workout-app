@@ -5,5 +5,5 @@ import { Theme } from '../../../../core/style/mainTheme';
 export const MainCircularProgress = styled(CircularProgress)`
   left: 0;
   color: ${(props: { theme: Theme }) =>
-    props.theme.colors.workoutSpinnerSecondary};
+    props.theme.colors.workoutSpinnerBackground};
 `;

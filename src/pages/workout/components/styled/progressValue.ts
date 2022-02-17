@@ -11,7 +11,7 @@ export const ProgressValue = styled(Typography)`
   left: 0;
   bottom: 0;
   right: 0;
-  color: ${(props: { theme: Theme }) => props.theme.colors.workoutSpinner};
+  color: ${(props: { theme: Theme }) => props.theme.colors.workoutSpinnerBar};
   font-size: 40px;
   font-weight: 600;
 `;
