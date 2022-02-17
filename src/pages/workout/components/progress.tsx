@@ -17,6 +17,12 @@ const Reversed = styled.div`
 
 export function Progress({ progressValue, displayValue }: ProgressProps) {
   const reversedProgress = 100 - progressValue;
+  const progressSize = 128;
+  const progressThickness = 3;
+
+  const showLeadingZero = (value: number): string => {
+    return value < 10 ? '0' : '';
+  };
 
   return (
     <ProgressContainer>
@@ -24,21 +30,21 @@ export function Progress({ progressValue, displayValue }: ProgressProps) {
         <Reversed>
           <BackgroundCircularProgress
             variant="determinate"
-            size={128}
-            thickness={3}
+            size={progressSize}
+            thickness={progressThickness}
             value={reversedProgress}
           />
         </Reversed>
         <MainCircularProgress
           variant="determinate"
           value={progressValue}
-          size={128}
-          thickness={3}
+          size={progressSize}
+          thickness={progressThickness}
         />
       </Box>
 
       <ProgressValue variant="caption">
-        {`${displayValue < 10 ? '0' : ''}${displayValue}`}
+        {`${showLeadingZero(displayValue)}${displayValue}`}
       </ProgressValue>
     </ProgressContainer>
   );

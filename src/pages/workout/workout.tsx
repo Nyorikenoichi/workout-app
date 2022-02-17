@@ -36,9 +36,11 @@ export default function Workout() {
   ] = useExerciseTimer(state);
 
   const convertCounterToPercent = () => {
+    const fullProgress = 100;
+
     return (
-      100 -
-      (100 * exerciseCounter) /
+      fullProgress -
+      (fullProgress * exerciseCounter) /
         (isPreparing
           ? preparingDuration
           : (currentExercise?.duration as number))
