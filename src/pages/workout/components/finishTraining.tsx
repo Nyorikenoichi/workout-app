@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { Button, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
 import { MainRoutes } from '../../../core/constants/mainRoutes';
 import { ContextApp } from '../../../core/store/reducers/globalStateReducer';
 import { incrementExercisesProcessedAction } from '../../../core/store/thunk/firestore';
+import { FinishIcon } from './styled/finishIcon';
+import { FinishButton } from './styled/finishButton';
+import { FinishDescription } from './styled/finishDescription';
 
 interface FinishTrainingProps {
   time: number;
@@ -16,18 +19,32 @@ export function FinishTraining({ time }: FinishTrainingProps) {
 
   const { t } = useTranslation();
 
+  const navigate = useNavigate();
+
   const onSave = () => {
     dispatch(incrementExercisesProcessedAction());
+    navigate(MainRoutes.main);
+  };
+
+  const timeToMinutes = (seconds: number): number => {
+    const oneMinute = 60;
+    return Math.round(seconds / oneMinute);
   };
 
   return (
     <>
-      <Typography variant="h2">{t('workout_complete')}</Typography>
-      <Typography>{t('workout_summary')}</Typography>
-      <Typography>{`Minutes: ${Math.round(time / 60)}`}</Typography>
-      <Link to={MainRoutes.main}>
-        <Button onClick={onSave}>{t('save_and_continue')}</Button>
-      </Link>
+      <FinishIcon />
+      <Typography fontSize={40} fontWeight={600}>
+        {t('workout_complete')}
+      </Typography>
+      <FinishDescription>{t('workout_summary')}</FinishDescription>
+      <Typography fontSize={14}>{t('minutes')}</Typography>
+      <Typography fontSize={40} fontWeight={600}>
+        {timeToMinutes(time)}
+      </Typography>
+      <FinishButton variant="contained" onClick={onSave}>
+        {t('save_and_continue')}
+      </FinishButton>
     </>
   );
 }

@@ -1,15 +1,21 @@
 import * as React from 'react';
-import { Button, List, Typography } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { MainRoutes } from '../../core/constants/mainRoutes';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import exerciseImage from '../../assets/images/exerciseImage.png';
 import Exercise from '../../core/interfaces/exercise';
 import { ExercisesListItem } from './components/ExercisesListItem';
-import ExercisesWrapper from './components/exercisesWrapper';
-import { StartWorkoutButton } from './components/startWorkoutButton';
+import { ExercisesWrapper } from './components/styled/exercisesWrapper';
+import { StartWorkoutButton } from './components/styled/startWorkoutButton';
+import { ExercisesPoster } from './components/styled/exercisesPoster';
+import { ExercisesDivider } from './components/styled/exercisesDivider';
+import { ExercisesTitle } from './components/styled/exercisesTitle';
+import { BackToMainButton } from './components/styled/backToMainButton';
+import { ExercisesList } from './components/styled/exercisesList';
 
 export default function Exercises() {
   const { state } = useContext(ContextApp);
@@ -19,11 +25,19 @@ export default function Exercises() {
   const navigate = useNavigate();
 
   const { currentExerciseGroup } = state;
+  const dayNumber =
+    (state.statistics?.exercisesPerformedCount[
+      currentExerciseGroup?.title as string
+    ] as number) + 1;
 
   const renderExercisesList = () => {
     return currentExerciseGroup?.exercises.map((item: Exercise) => {
       return <ExercisesListItem item={item} key={item.id} />;
     });
+  };
+
+  const onBackToMain = () => {
+    navigate(MainRoutes.main);
   };
 
   const onStartWorkout = () => {
@@ -33,12 +47,14 @@ export default function Exercises() {
   return (
     <>
       <ExercisesWrapper>
-        <Typography>
-          <Link to={MainRoutes.main}>{t('back_to_main')}</Link>
-        </Typography>
-        <img src={exerciseImage} alt="" />
-        <Typography>{currentExerciseGroup?.title}</Typography>
-        <List>{renderExercisesList()}</List>
+        <BackToMainButton onClick={onBackToMain}>
+          <ArrowBackIcon />
+        </BackToMainButton>
+        <ExercisesPoster src={exerciseImage} alt="" />
+        <Typography>{`Day ${dayNumber}`}</Typography>
+        <ExercisesTitle>{currentExerciseGroup?.title}</ExercisesTitle>
+        <ExercisesDivider />
+        <ExercisesList>{renderExercisesList()}</ExercisesList>
       </ExercisesWrapper>
       <StartWorkoutButton variant="contained" onClick={onStartWorkout}>
         {t('start_exercise')}

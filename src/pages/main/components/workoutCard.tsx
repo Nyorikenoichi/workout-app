@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MainRoutes } from '../../../core/constants/mainRoutes';
@@ -18,30 +18,27 @@ export default function WorkoutCard({ card, completeCount }: WorkoutCardProps) {
 
   const { t } = useTranslation();
 
+  const navigate = useNavigate();
+
   const onSetCurrentExercises = () => {
     dispatch(setCurrentExerciseGroupAction({ currentExerciseGroup: card }));
+    navigate(MainRoutes.exerciseGroup);
   };
 
   return (
-    <Link to={MainRoutes.exerciseGroup} style={{ textDecoration: 'none' }}>
-      <Card sx={{ width: 300, margin: '25px' }} onClick={onSetCurrentExercises}>
-        <CardMedia
-          component="img"
-          height="300"
-          image={card.exercises[0].photo}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {card.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {card.muscle_group.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {`${t('times_complete')} ${completeCount}`}
-          </Typography>
-        </CardContent>
-      </Card>
-    </Link>
+    <Card sx={{ width: 300, margin: '25px' }} onClick={onSetCurrentExercises}>
+      <CardMedia component="img" height="300" image={card.exercises[0].photo} />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {card.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {card.muscle_group.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {`${t('times_complete')} ${completeCount}`}
+        </Typography>
+      </CardContent>
+    </Card>
   );
 }

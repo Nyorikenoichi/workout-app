@@ -1,14 +1,19 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Button, IconButton, Typography } from '@mui/material';
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 import SkipNextIcon from '@mui/icons-material/SkipNext';
-import PauseCircleIcon from '@mui/icons-material/PauseCircle';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import { ControllsContainer } from './components/styled/controllsContainer';
 import { Progress } from './components/progress';
 import { FinishTraining } from './components/finishTraining';
+import { WorkoutWrapper } from './components/styled/workoutWrapper';
+import { WorkoutDivider } from './components/styled/workoutDivider';
+import { PauseButtonWrapper } from './components/styled/pauseButtonWrapper';
+import { PlayIcon } from './components/styled/playIcon';
+import { PauseIcon } from './components/styled/pauseIcon';
+import VideoOverlay from './components/videoOverlay';
+import { ControllsEmptyDiv } from './components/styled/overlay/controllsEmptyDiv';
 
 export default function Workout() {
   const { state } = useContext(ContextApp);
@@ -45,9 +50,30 @@ export default function Workout() {
     }
   };
 
+  const videoRef = useRef<HTMLVideoElement>(null);
+
   const switchPause = () => {
+    if (isPaused) {
+      videoRef.current?.play();
+    } else {
+      videoRef.current?.pause();
+    }
     setPaused((pause) => !pause);
   };
+
+  const handleSpaceDown = (event: KeyboardEvent): void => {
+    if (event.code === 'Space') {
+      switchPause();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleSpaceDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleSpaceDown);
+    };
+  }, []);
 
   useEffect(() => {
     if (exerciseCounter === 0 && isPreparing) {
@@ -82,36 +108,52 @@ export default function Workout() {
     );
   };
 
-  return trainingFinished ? (
-    <FinishTraining time={totalTime} />
-  ) : (
-    <>
-      <Typography>
-        {isPreparing ? 'Get ready' : currentExercise?.title}
-      </Typography>
-      <ControllsContainer>
-        <Button onClick={prevExercise} variant="outlined">
-          <SkipPreviousIcon />
-        </Button>
-        <Progress
-          progressValue={convertCounterToPercent()}
-          displayValue={exerciseCounter}
-          isPaused={isPaused}
-        />
-        <Button onClick={nextExercise} variant="outlined">
-          <SkipNextIcon />
-        </Button>
-      </ControllsContainer>
-      <video src={currentExercise?.video} autoPlay loop>
-        <track kind="captions" />
-      </video>
-      <IconButton onClick={switchPause}>
-        {isPaused ? (
-          <PlayCircleIcon fontSize="large" />
-        ) : (
-          <PauseCircleIcon fontSize="large" />
-        )}
-      </IconButton>
-    </>
+  return (
+    <WorkoutWrapper>
+      {trainingFinished ? (
+        <FinishTraining time={totalTime} />
+      ) : (
+        <>
+          <Typography fontSize={24} fontWeight={600} marginTop="20px">
+            {isPreparing ? 'Get ready' : currentExercise?.title}
+          </Typography>
+          <ControllsContainer>
+            {currentExerciseIndex > 0 ? (
+              <Button onClick={prevExercise} variant="outlined" size="large">
+                <SkipPreviousIcon />
+              </Button>
+            ) : (
+              <ControllsEmptyDiv />
+            )}
+            <Progress
+              progressValue={convertCounterToPercent()}
+              displayValue={exerciseCounter}
+            />
+            <Button onClick={nextExercise} variant="outlined" size="large">
+              <SkipNextIcon />
+            </Button>
+          </ControllsContainer>
+          <div>
+            {isPaused && <VideoOverlay />}
+            <video
+              ref={videoRef}
+              width={800}
+              height={450}
+              src={currentExercise?.video}
+              autoPlay
+              loop
+            >
+              <track kind="captions" />
+            </video>
+          </div>
+          <PauseButtonWrapper>
+            <WorkoutDivider />
+            <IconButton onClick={switchPause}>
+              {isPaused ? <PlayIcon /> : <PauseIcon />}
+            </IconButton>
+          </PauseButtonWrapper>
+        </>
+      )}
+    </WorkoutWrapper>
   );
 }

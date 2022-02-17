@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Icon, ListItem, ListItemText } from '@mui/material';
+import { ListItem, ListItemText } from '@mui/material';
 import Exercise from '../../../core/interfaces/exercise';
+import { ExerciseListIcon } from './styled/exerciseListIcon';
 
 interface ExercisesListItemProps {
   item: Exercise;
@@ -8,11 +9,14 @@ interface ExercisesListItemProps {
 
 export function ExercisesListItem({ item }: ExercisesListItemProps) {
   return (
-    <ListItem>
-      <Icon>
-        <img src={item.photo} height={25} width={25} alt="" />
-      </Icon>
-      <ListItemText primary={item.title} secondary={`${item.duration} sec`} />;
+    <ListItem disableGutters>
+      <ExerciseListIcon src={item.photo} alt="" />
+      <ListItemText
+        primary={item.title}
+        primaryTypographyProps={{ fontWeight: 600 }}
+        secondary={`${item.duration} sec`}
+        secondaryTypographyProps={{ color: 'black' }}
+      />
     </ListItem>
   );
 }
