@@ -8,6 +8,7 @@ export interface Theme {
     workoutSpinner: string;
     workoutSpinnerSecondary: string;
     workoutSpinnerPaused: string;
+    buttonsBackground: string;
   };
   fonts: string[];
 }
@@ -18,6 +19,7 @@ const mainTheme = {
     backgroundDark: '#D9D9D9',
     workoutSpinner: '#1DE9B6',
     workoutSpinnerSecondary: '#EEEEEE',
+    buttonsBackground: '#AA00FF',
   },
   fonts: ['Roboto'],
 };

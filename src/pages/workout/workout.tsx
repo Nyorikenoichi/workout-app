@@ -14,6 +14,7 @@ import { PlayIcon } from './components/styled/playIcon';
 import { PauseIcon } from './components/styled/pauseIcon';
 import VideoOverlay from './components/videoOverlay';
 import { ControllsEmptyDiv } from './components/styled/overlay/controllsEmptyDiv';
+import { ControllsButton } from './components/styled/overlay/ControllsButton';
 
 export default function Workout() {
   const { state } = useContext(ContextApp);
@@ -119,9 +120,13 @@ export default function Workout() {
           </Typography>
           <ControllsContainer>
             {currentExerciseIndex > 0 ? (
-              <Button onClick={prevExercise} variant="outlined" size="large">
+              <ControllsButton
+                onClick={prevExercise}
+                variant="outlined"
+                size="large"
+              >
                 <SkipPreviousIcon />
-              </Button>
+              </ControllsButton>
             ) : (
               <ControllsEmptyDiv />
             )}
@@ -129,9 +134,13 @@ export default function Workout() {
               progressValue={convertCounterToPercent()}
               displayValue={exerciseCounter}
             />
-            <Button onClick={nextExercise} variant="outlined" size="large">
+            <ControllsButton
+              onClick={nextExercise}
+              variant="outlined"
+              size="large"
+            >
               <SkipNextIcon />
-            </Button>
+            </ControllsButton>
           </ControllsContainer>
           <div>
             {isPaused && <VideoOverlay />}

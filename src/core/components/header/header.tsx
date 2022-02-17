@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Typography } from '@mui/material';
-import Button from '@mui/material/Button';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
 import { ContextApp } from '../../store/reducers/globalStateReducer';
 import HeaderContainer from './components/HeaderContainer';
 import Logout from './components/logout';
 import { logOutAction } from '../../store/thunk/auth';
+import { LogoutButton } from './components/logoutButton';
 
 export default function Header() {
   const { t } = useTranslation();
@@ -23,9 +23,9 @@ export default function Header() {
       {!!state.user && (
         <Logout>
           <Typography variant="h5">{state.user?.displayName}</Typography>
-          <Button variant="contained" onClick={onLogout}>
+          <LogoutButton variant="contained" onClick={onLogout}>
             {t('sign_out')}
-          </Button>
+          </LogoutButton>
         </Logout>
       )}
     </HeaderContainer>
