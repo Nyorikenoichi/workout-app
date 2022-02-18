@@ -3,6 +3,7 @@ import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
+import { secondsToMinutes } from 'src/core/helpers/date';
 import { MainRoutes } from '../../../core/constants/mainRoutes';
 import { ContextApp } from '../../../core/store/reducers/globalStateReducer';
 import { incrementExercisesProcessedAction } from '../../../core/store/thunk/firestore';
@@ -26,11 +27,6 @@ export function FinishTraining({ time }: FinishTrainingProps) {
     navigate(MainRoutes.main);
   };
 
-  const timeToMinutes = (seconds: number): number => {
-    const oneMinute = 60;
-    return Math.round(seconds / oneMinute);
-  };
-
   return (
     <>
       <FinishIcon />
@@ -40,7 +36,7 @@ export function FinishTraining({ time }: FinishTrainingProps) {
       <FinishDescription>{t('workout_summary')}</FinishDescription>
       <Typography fontSize={14}>{t('minutes')}</Typography>
       <Typography fontSize={40} fontWeight={600}>
-        {timeToMinutes(time)}
+        {secondsToMinutes(time)}
       </Typography>
       <FinishButton variant="contained" onClick={onSave}>
         {t('save_and_continue')}

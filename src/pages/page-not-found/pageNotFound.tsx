@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MainRoutes } from '../../core/constants/mainRoutes';
 
-export default function PageNotFound() {
+export const PageNotFound = React.memo(function PageNotFound() {
   const { t } = useTranslation();
 
   return (
@@ -16,4 +16,4 @@ export default function PageNotFound() {
       </Typography>
     </div>
   );
-}
+});

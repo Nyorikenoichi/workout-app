@@ -47,6 +47,6 @@ export const setCurrentExerciseGroupAction = (data: {
 export const setErrorMessageAction = (data: {
   errorMessage: string;
 }): GlobalStateActionType<{ errorMessage: string }> => ({
-  type: GlobalStateActionTypes.SetWorkouts,
+  type: GlobalStateActionTypes.setErrorMessage,
   payload: data,
 });

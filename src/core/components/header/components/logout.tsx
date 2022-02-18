@@ -5,7 +5,7 @@ const Logout = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 70px;
-  width: 180px;
+  width: 250px;
   padding: 5px;
 `;
 

@@ -15,6 +15,7 @@ export interface Theme {
 
 const mainTheme = {
   colors: {
+    overlayText: '#FFFFFF',
     background: '#E5E5E5',
     backgroundDark: '#D9D9D9',
     workoutSpinnerBar: '#1DE9B6',

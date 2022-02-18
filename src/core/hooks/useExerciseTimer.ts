@@ -2,6 +2,10 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 import Exercise from '../interfaces/exercise';
 import { GlobalState } from '../store/reducers/globalStateReducer';
 
+const preparingDuration = 5;
+const counterInterval = 1000;
+const fullProgress = 100;
+
 export default function useExerciseTimer(
   state: GlobalState
 ): [
@@ -10,16 +14,16 @@ export default function useExerciseTimer(
   boolean,
   () => void,
   boolean,
-  number,
   () => void,
   () => void,
   number,
+  () => number,
   number,
   boolean,
   RefObject<HTMLVideoElement>
 ] {
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
-  const [exerciseCounter, setCounter] = useState(5);
+  const [exerciseCounter, setCounter] = useState(preparingDuration);
   const [totalTime, setTotalTime] = useState(0);
   const [isPaused, setPaused] = useState(false);
   const [isPreparing, setPreparing] = useState(true);
@@ -28,9 +32,6 @@ export default function useExerciseTimer(
   const currentExercise =
     state.currentExerciseGroup?.exercises[currentExerciseIndex];
   const exercisesCount = state.currentExerciseGroup?.exercises.length as number;
-
-  const preparingDuration = 5;
-  const oneSecond = 1000;
 
   const nextExercise = () => {
     if (currentExerciseIndex < exercisesCount - 1) {
@@ -89,14 +90,24 @@ export default function useExerciseTimer(
         setCounter((c) => c - 1);
       }
       setTotalTime((time) => time + 1);
-    }, oneSecond);
+    }, counterInterval);
 
     return () => {
       if (timer) {
         clearTimeout(timer);
       }
     };
-  }, [totalTime]);
+  }, [totalTime, isPaused]);
+
+  const convertCounterToPercent = () => {
+    return (
+      fullProgress -
+      (fullProgress * exerciseCounter) /
+        (isPreparing
+          ? preparingDuration
+          : (currentExercise?.duration as number))
+    );
+  };
 
   return [
     currentExercise,
@@ -104,10 +115,10 @@ export default function useExerciseTimer(
     isPaused,
     switchPause,
     isPreparing,
-    preparingDuration,
     nextExercise,
     prevExercise,
     exerciseCounter,
+    convertCounterToPercent,
     totalTime,
     trainingFinished,
     videoRef,

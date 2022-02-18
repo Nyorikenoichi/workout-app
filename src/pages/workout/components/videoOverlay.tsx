@@ -8,7 +8,7 @@ import { VideoOverlayDescription } from './styled/overlay/videoOverlayDescriptio
 import { MainRoutes } from '../../../core/constants/mainRoutes';
 import { VideoOverlayButton } from './styled/overlay/videoOverlayButton';
 
-export default function VideoOverlay() {
+export const VideoOverlay = React.memo(function VideoOverlay() {
   const { t } = useTranslation();
 
   const navigate = useNavigate();
@@ -28,4 +28,4 @@ export default function VideoOverlay() {
       </VideoOverlayButton>
     </VideoOverlayWrapper>
   );
-}
+});

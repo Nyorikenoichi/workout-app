@@ -6,7 +6,7 @@ import CardsWrapper from './components/cardsWrapper';
 import ExerciseGroup from '../../core/interfaces/exerciseGroup';
 import { getInitialDataAction } from '../../core/store/thunk/firestore';
 
-export default function Main() {
+export const Main = React.memo(function Main() {
   const { state, dispatch } = useContext(ContextApp);
 
   useEffect(() => {
@@ -30,4 +30,4 @@ export default function Main() {
       {state.workouts && renderCards(state.workouts.questions)}
     </CardsWrapper>
   );
-}
+});

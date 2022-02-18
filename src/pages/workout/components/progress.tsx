@@ -15,10 +15,11 @@ const Reversed = styled.div`
   transform: scale(-1, 1);
 `;
 
+const progressSize = 128;
+const progressThickness = 3;
+
 export function Progress({ progressValue, displayValue }: ProgressProps) {
   const reversedProgress = 100 - progressValue;
-  const progressSize = 128;
-  const progressThickness = 3;
 
   const showLeadingZero = (value: number): string => {
     return value < 10 ? '0' : '';

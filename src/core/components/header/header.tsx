@@ -7,8 +7,9 @@ import HeaderContainer from './components/HeaderContainer';
 import Logout from './components/logout';
 import { logOutAction } from '../../store/thunk/auth';
 import { LogoutButton } from './components/logoutButton';
+import { UserNameLabel } from './components/userNameLabel';
 
-export default function Header() {
+export const Header = React.memo(function Header() {
   const { t } = useTranslation();
 
   const { state, dispatch } = useContext(ContextApp);
@@ -22,7 +23,7 @@ export default function Header() {
       <Typography variant="h3">{t('main_title')}</Typography>
       {!!state.user && (
         <Logout>
-          <Typography variant="h5">{state.user?.displayName}</Typography>
+          <UserNameLabel variant="h5">{state.user?.displayName}</UserNameLabel>
           <LogoutButton variant="contained" onClick={onLogout}>
             {t('sign_out')}
           </LogoutButton>
@@ -30,4 +31,4 @@ export default function Header() {
       )}
     </HeaderContainer>
   );
-}
+});

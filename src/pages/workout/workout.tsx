@@ -12,12 +12,12 @@ import { WorkoutDivider } from './components/styled/workoutDivider';
 import { PauseButtonWrapper } from './components/styled/pauseButtonWrapper';
 import { PlayIcon } from './components/styled/playIcon';
 import { PauseIcon } from './components/styled/pauseIcon';
-import VideoOverlay from './components/videoOverlay';
-import { ControllsEmptyDiv } from './components/styled/overlay/controllsEmptyDiv';
-import { ControllsButton } from './components/styled/overlay/ControllsButton';
+import { VideoOverlay } from './components/videoOverlay';
+import { ControllsEmptyDiv } from './components/styled/controllsEmptyDiv';
+import { ControllsButton } from './components/styled/ControllsButton';
 import useExerciseTimer from '../../core/hooks/useExerciseTimer';
 
-export default function Workout() {
+export const Workout = React.memo(function Workout() {
   const { state } = useContext(ContextApp);
 
   const [
@@ -26,26 +26,14 @@ export default function Workout() {
     isPaused,
     switchPause,
     isPreparing,
-    preparingDuration,
     nextExercise,
     prevExercise,
     exerciseCounter,
+    convertCounterToPercent,
     totalTime,
     trainingFinished,
     videoRef,
   ] = useExerciseTimer(state);
-
-  const convertCounterToPercent = () => {
-    const fullProgress = 100;
-
-    return (
-      fullProgress -
-      (fullProgress * exerciseCounter) /
-        (isPreparing
-          ? preparingDuration
-          : (currentExercise?.duration as number))
-    );
-  };
 
   return (
     <WorkoutWrapper>
@@ -103,4 +91,4 @@ export default function Workout() {
       )}
     </WorkoutWrapper>
   );
-}
+});

@@ -34,7 +34,6 @@ export const logOutAction =
       await signOut(auth);
       dispatch(setStatisticsAction({ statistics: null }));
       dispatch(setWorkoutsAction({ workouts: null }));
-      dispatch(setLoadingAction({ isLoading: false }));
     } catch (error) {
       dispatch(
         setErrorMessageAction({ errorMessage: (error as AuthError).code })
@@ -52,7 +51,6 @@ export const loginAction =
     try {
       dispatch(setLoadingAction({ isLoading: true }));
       await signInWithEmailAndPassword(auth, values.email, values.password);
-      dispatch(setLoadingAction({ isLoading: true }));
     } catch (error) {
       dispatch(
         setErrorMessageAction({ errorMessage: (error as AuthError).code })

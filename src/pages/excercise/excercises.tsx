@@ -17,7 +17,7 @@ import { ExercisesTitle } from './components/styled/exercisesTitle';
 import { BackToMainButton } from './components/styled/backToMainButton';
 import { ExercisesList } from './components/styled/exercisesList';
 
-export default function Exercises() {
+export const Exercises = React.memo(function Exercises() {
   const { state } = useContext(ContextApp);
 
   const { t } = useTranslation();
@@ -61,4 +61,4 @@ export default function Exercises() {
       </StartWorkoutButton>
     </>
   );
-}
+});
