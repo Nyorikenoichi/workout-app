@@ -16,6 +16,8 @@ import { VideoOverlay } from './components/videoOverlay';
 import { ControllsEmptyDiv } from './components/styled/controllsEmptyDiv';
 import { ControllsButton } from './components/styled/ControllsButton';
 import useExerciseTimer from '../../core/hooks/useExerciseTimer';
+import { WorkoutVideo } from './components/styled/workoutVideo';
+import { WorkoutVideoWrapper } from './components/styled/workoutVideoWrapper';
 
 export const Workout = React.memo(function Workout() {
   const { state } = useContext(ContextApp);
@@ -68,19 +70,18 @@ export const Workout = React.memo(function Workout() {
               <SkipNextIcon />
             </ControllsButton>
           </ControllsContainer>
-          <div>
+          <WorkoutVideoWrapper>
             {isPaused && <VideoOverlay />}
-            <video
+            <WorkoutVideo
               ref={videoRef}
-              width={800}
-              height={450}
-              src={currentExercise?.video}
+              src={`${currentExercise?.video}#t=0.5`}
+              preload="metadata"
               autoPlay
               loop
             >
               <track kind="captions" />
-            </video>
-          </div>
+            </WorkoutVideo>
+          </WorkoutVideoWrapper>
           <PauseButtonWrapper>
             <WorkoutDivider />
             <IconButton onClick={switchPause}>

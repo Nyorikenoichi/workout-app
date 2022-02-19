@@ -10,6 +10,7 @@ import { incrementExercisesProcessedAction } from '../../../core/store/thunk/fir
 import { FinishIcon } from './styled/finishIcon';
 import { FinishButton } from './styled/finishButton';
 import { FinishDescription } from './styled/finishDescription';
+import { FinishTrainingWrapper } from './styled/finishTrainingWrapper';
 
 interface FinishTrainingProps {
   time: number;
@@ -28,7 +29,7 @@ export function FinishTraining({ time }: FinishTrainingProps) {
   };
 
   return (
-    <>
+    <FinishTrainingWrapper>
       <FinishIcon />
       <Typography fontSize={40} fontWeight={600}>
         {t('workout_complete')}
@@ -41,6 +42,6 @@ export function FinishTraining({ time }: FinishTrainingProps) {
       <FinishButton variant="contained" onClick={onSave}>
         {t('save_and_continue')}
       </FinishButton>
-    </>
+    </FinishTrainingWrapper>
   );
 }
