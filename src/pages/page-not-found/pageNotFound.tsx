@@ -9,7 +9,9 @@ export const PageNotFound = React.memo(function PageNotFound() {
 
   return (
     <div>
-      <Typography variant="h4">{t('page_not_found')}</Typography>
+      <Typography marginTop="100px" variant="h4">
+        {t('page_not_found')}
+      </Typography>
       <Typography>
         {t('back_to_main1')}
         <Link to={MainRoutes.main}>{t('back_to_main2')}</Link>
