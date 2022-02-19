@@ -9,9 +9,9 @@ import AuthFormContainer from './components/authFormContainer';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import { MainRoutes } from '../../core/constants/mainRoutes';
 import { AuthFormValues } from '../../core/interfaces/formValues';
-import { loginAction } from '../../core/store/thunk/thunkActions';
+import { loginAction } from '../../core/store/thunk/auth';
 
-export default function Authentication() {
+export const Authentication = React.memo(function Authentication() {
   const { state, dispatch } = useContext(ContextApp);
 
   const { t } = useTranslation();
@@ -60,4 +60,4 @@ export default function Authentication() {
       </Typography>
     </AuthFormContainer>
   );
-}
+});

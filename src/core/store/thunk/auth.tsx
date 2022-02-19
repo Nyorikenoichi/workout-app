@@ -5,46 +5,25 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
-import { FirestoreError, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import {
   GlobalStateActionType,
   Thunk,
 } from '../action-types/globalStateActionTypes';
 import { GlobalState } from '../reducers/globalStateReducer';
-import { auth, db } from '../../firebase/firebaseInit';
 import {
   setErrorMessageAction,
   setLoadingAction,
   setStatisticsAction,
   setWorkoutsAction,
 } from '../actions/globalStateActions';
-import { getWorkouts } from '../../api/workouts';
-import { getStatistics } from '../../api/statistics';
+import { auth, db } from '../../firebase/firebaseInit';
 import {
   AuthFormValues,
   RegisterFormValues,
 } from '../../interfaces/formValues';
-
-export const getBackendDataAction =
-  (): Thunk<GlobalStateActionType<Partial<GlobalState>>, GlobalState> =>
-  async (dispatch, state) => {
-    try {
-      dispatch(setLoadingAction({ isLoading: true }));
-
-      const workouts = await getWorkouts();
-      const statistics = await getStatistics(state);
-
-      dispatch(setWorkoutsAction({ workouts }));
-      dispatch(setStatisticsAction({ statistics }));
-    } catch (error) {
-      dispatch(
-        setErrorMessageAction({ errorMessage: (error as FirestoreError).code })
-      );
-      console.log(error);
-    } finally {
-      dispatch(setLoadingAction({ isLoading: false }));
-    }
-  };
+import { exerciseGroupNames } from '../../constants/exerciseGroupNames';
+import { Statistics } from '../../interfaces/statistics';
 
 export const logOutAction =
   (): Thunk<GlobalStateActionType<Partial<GlobalState>>, GlobalState> =>
@@ -55,7 +34,6 @@ export const logOutAction =
       await signOut(auth);
       dispatch(setStatisticsAction({ statistics: null }));
       dispatch(setWorkoutsAction({ workouts: null }));
-      dispatch(setLoadingAction({ isLoading: false }));
     } catch (error) {
       dispatch(
         setErrorMessageAction({ errorMessage: (error as AuthError).code })
@@ -73,7 +51,6 @@ export const loginAction =
     try {
       dispatch(setLoadingAction({ isLoading: true }));
       await signInWithEmailAndPassword(auth, values.email, values.password);
-      dispatch(setLoadingAction({ isLoading: true }));
     } catch (error) {
       dispatch(
         setErrorMessageAction({ errorMessage: (error as AuthError).code })
@@ -108,9 +85,16 @@ export const registerAction =
       await updateProfile(cred.user, {
         displayName: values.userName,
       });
-      await setDoc(doc(db, 'users', cred.user.uid), {
-        someData: Math.random() * 100,
+
+      const initialStatistics: Statistics = {
+        exercisesPerformedCount: {},
+      };
+      const exercises = Object.values(exerciseGroupNames) as string[];
+      exercises.forEach((exercise) => {
+        initialStatistics.exercisesPerformedCount[exercise] = 0;
       });
+
+      await setDoc(doc(db, 'users', cred.user.uid), initialStatistics);
     } catch (error) {
       dispatch(
         setErrorMessageAction({ errorMessage: (error as AuthError).code })

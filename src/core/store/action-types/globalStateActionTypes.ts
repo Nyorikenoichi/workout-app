@@ -13,5 +13,6 @@ export enum GlobalStateActionTypes {
   SetLoading = 'SetLoading',
   SetStatistics = 'setStatistics',
   SetWorkouts = 'setWorkouts',
+  SetCurrentExerciseGroup = 'setCurrentExerciseGroup',
   setErrorMessage = 'setErrorMessage',
 }

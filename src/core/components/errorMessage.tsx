@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { setErrorMessageAction } from '../store/actions/globalStateActions';
 import { ContextApp } from '../store/reducers/globalStateReducer';
 
-export default function ErrorMessage() {
+export const ErrorMessage = React.memo(function ErrorMessage() {
   const { state, dispatch } = useContext(ContextApp);
 
   const { t } = useTranslation();
@@ -23,4 +23,4 @@ export default function ErrorMessage() {
       </DialogActions>
     </Dialog>
   );
-}
+});

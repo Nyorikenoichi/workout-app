@@ -11,25 +11,26 @@ import {
 } from './core/store/reducers/globalStateReducer';
 import { MainTheme } from './core/style/mainTheme';
 import GlobalStyles from './core/style/globalStyle';
-import Authentication from './pages/auth/authentication';
+import { Authentication } from './pages/auth/authentication';
 import { MainRoutes } from './core/constants/mainRoutes';
-import Register from './pages/register/register';
-import Workout from './pages/main/workout';
+import { Register } from './pages/register/register';
+import { Main } from './pages/main/main';
 import {
   setLoadingAction,
   setUserAction,
 } from './core/store/actions/globalStateActions';
-import PrivateRoute from './core/components/PrivateRoute';
+import { PrivateRoute } from './core/components/PrivateRoute';
 import { auth } from './core/firebase/firebaseInit';
-import Exercise from './pages/excercise/excercise';
-import PageNotFound from './pages/page-not-found/pageNotFound';
+import { PageNotFound } from './pages/page-not-found/pageNotFound';
 import { GlobalStateActionType } from './core/store/action-types/globalStateActionTypes';
-import Header from './core/components/header/header';
+import { Header } from './core/components/header/header';
 import Content from './core/components/content';
-import Loader from './core/components/loader';
-import ErrorMessage from './core/components/errorMessage';
+import { Loader } from './core/components/loader';
+import { ErrorMessage } from './core/components/errorMessage';
+import { Workout } from './pages/workout/workout';
+import { Exercises } from './pages/excercise/excercises';
 
-export default function App() {
+export function App() {
   const [state, dispatch] = React.useReducer(globalStateReducer, initialState);
 
   const contextValue = useMemo(
@@ -63,10 +64,16 @@ export default function App() {
               <Route path={MainRoutes.auth} element={<Authentication />} />
               <Route path={MainRoutes.register} element={<Register />} />
               <Route path={MainRoutes.main} element={<PrivateRoute />}>
-                <Route path={MainRoutes.main} element={<Workout />} />
+                <Route path={MainRoutes.main} element={<Main />} />
               </Route>
-              <Route path={MainRoutes.exercise} element={<PrivateRoute />}>
-                <Route path={MainRoutes.exercise} element={<Exercise />} />
+              <Route path={MainRoutes.exerciseGroup} element={<PrivateRoute />}>
+                <Route
+                  path={MainRoutes.exerciseGroup}
+                  element={<Exercises />}
+                />
+              </Route>
+              <Route path={MainRoutes.workout} element={<PrivateRoute />}>
+                <Route path={MainRoutes.workout} element={<Workout />} />
               </Route>
               <Route path="*" element={<PageNotFound />} />
             </Routes>

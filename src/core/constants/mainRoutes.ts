@@ -2,5 +2,6 @@ export enum MainRoutes {
   main = '/',
   auth = '/auth',
   register = '/register',
-  exercise = '/exercise',
+  exerciseGroup = '/exercise-group',
+  workout = '/workout',
 }

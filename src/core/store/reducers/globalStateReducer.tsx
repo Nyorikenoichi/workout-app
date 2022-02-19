@@ -7,6 +7,8 @@ import {
   Thunk,
 } from '../action-types/globalStateActionTypes';
 import WorkoutData from '../../interfaces/workoutData';
+import ExerciseGroup from '../../interfaces/exerciseGroup';
+import { Statistics } from '../../interfaces/statistics';
 
 export const augmentDispatch =
   <A, S>(dispatch: React.Dispatch<A>, state: S) =>
@@ -16,8 +18,9 @@ export const augmentDispatch =
 export interface GlobalState {
   user: User | null;
   isLoading: boolean;
-  statistics: Record<string, unknown> | null | undefined;
+  statistics: Statistics | null | undefined;
   workouts: WorkoutData | null;
+  currentExerciseGroup: ExerciseGroup | null;
   errorMessage: string;
 }
 
@@ -26,6 +29,7 @@ export const initialState: GlobalState = {
   isLoading: true,
   statistics: null,
   workouts: null,
+  currentExerciseGroup: null,
   errorMessage: '',
 };
 
@@ -45,32 +49,41 @@ export const ContextApp = React.createContext<{
 export function globalStateReducer(
   state: GlobalState,
   action: GlobalStateActionType<Partial<GlobalState>>
-) {
+): GlobalState {
   switch (action.type) {
     case GlobalStateActionTypes.SetUser:
       return {
         ...state,
-        ...action.payload,
+        user: action.payload?.user as User,
       };
     case GlobalStateActionTypes.SetLoading:
       return {
         ...state,
-        ...action.payload,
+        isLoading: !!action.payload?.isLoading,
       };
     case GlobalStateActionTypes.SetStatistics:
       return {
         ...state,
-        ...action.payload,
+        statistics: {
+          ...state.statistics,
+          ...(action.payload?.statistics as Statistics),
+        },
       };
     case GlobalStateActionTypes.SetWorkouts:
       return {
         ...state,
-        ...action.payload,
+        workouts: action.payload?.workouts as WorkoutData,
+      };
+    case GlobalStateActionTypes.SetCurrentExerciseGroup:
+      return {
+        ...state,
+        currentExerciseGroup: action.payload
+          ?.currentExerciseGroup as ExerciseGroup,
       };
     case GlobalStateActionTypes.setErrorMessage:
       return {
         ...state,
-        ...action.payload,
+        errorMessage: action.payload?.errorMessage as string,
       };
     default:
       return state;

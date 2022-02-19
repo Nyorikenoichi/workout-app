@@ -5,14 +5,22 @@ export interface Theme {
   colors: {
     background: string;
     backgroundDark: string;
+    workoutSpinnerBar: string;
+    workoutSpinnerBackground: string;
+    workoutSpinnerPaused: string;
+    buttonsBackground: string;
   };
   fonts: string[];
 }
 
 const mainTheme = {
   colors: {
+    overlayText: '#FFFFFF',
     background: '#E5E5E5',
     backgroundDark: '#D9D9D9',
+    workoutSpinnerBar: '#1DE9B6',
+    workoutSpinnerBackground: '#EEEEEE',
+    buttonsBackground: '#AA00FF',
   },
   fonts: ['Roboto'],
 };
