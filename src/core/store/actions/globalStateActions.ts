@@ -4,6 +4,8 @@ import {
   GlobalStateActionTypes,
 } from '../action-types/globalStateActionTypes';
 import WorkoutData from '../../interfaces/workoutData';
+import ExerciseGroup from '../../interfaces/exerciseGroup';
+import { Statistics } from '../../interfaces/statistics';
 
 export const setUserAction = (user: {
   user: User | null;
@@ -20,9 +22,9 @@ export const setLoadingAction = (isLoading: {
 });
 
 export const setStatisticsAction = (data: {
-  statistics: Record<string, unknown> | null | undefined;
+  statistics: Statistics | null | undefined;
 }): GlobalStateActionType<{
-  statistics: Record<string, unknown> | null | undefined;
+  statistics: Statistics | null | undefined;
 }> => ({
   type: GlobalStateActionTypes.SetStatistics,
   payload: data,
@@ -35,9 +37,16 @@ export const setWorkoutsAction = (data: {
   payload: data,
 });
 
+export const setCurrentExerciseGroupAction = (data: {
+  currentExerciseGroup: ExerciseGroup | null;
+}): GlobalStateActionType<{ currentExerciseGroup: ExerciseGroup | null }> => ({
+  type: GlobalStateActionTypes.SetCurrentExerciseGroup,
+  payload: data,
+});
+
 export const setErrorMessageAction = (data: {
   errorMessage: string;
 }): GlobalStateActionType<{ errorMessage: string }> => ({
-  type: GlobalStateActionTypes.SetWorkouts,
+  type: GlobalStateActionTypes.setErrorMessage,
   payload: data,
 });
