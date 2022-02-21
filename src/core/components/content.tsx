@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { devices } from '../style/devices';
 
 const Content = styled.div`
   position: relative;
@@ -9,6 +10,10 @@ const Content = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 0 160px;
+
+  @media ${devices.mobileL} {
+    padding: 0 5px;
+  }
 `;
 
 export default Content;

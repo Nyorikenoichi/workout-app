@@ -6,8 +6,8 @@ export const VideoOverlayWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 800px;
-  height: 450px;
+  width: 100%;
+  height: 100%;
   z-index: 3;
   background: #212121;
   opacity: 0.64;

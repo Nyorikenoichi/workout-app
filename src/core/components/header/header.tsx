@@ -8,6 +8,7 @@ import Logout from './components/logout';
 import { logOutAction } from '../../store/thunk/auth';
 import { LogoutButton } from './components/logoutButton';
 import { UserNameLabel } from './components/userNameLabel';
+import { HeaderTitle } from './components/headerTitle';
 
 export const Header = React.memo(function Header() {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ export const Header = React.memo(function Header() {
 
   return (
     <HeaderContainer>
-      <Typography variant="h3">{t('main_title')}</Typography>
+      <HeaderTitle variant="h3">{t('main_title')}</HeaderTitle>
       {!!state.user && (
         <Logout>
           <UserNameLabel variant="h5">{state.user?.displayName}</UserNameLabel>

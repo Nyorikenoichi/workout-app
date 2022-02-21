@@ -5,7 +5,7 @@ import { ChangeEvent, FormEventHandler, useContext, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import RegisterFormContainer from './components/registerFormContainer';
+import { RegisterFormContainer } from './components/registerFormContainer';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import { MainRoutes } from '../../core/constants/mainRoutes';
 import { RegisterFormValues } from '../../core/interfaces/formValues';
