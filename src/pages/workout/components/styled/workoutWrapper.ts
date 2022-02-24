@@ -6,9 +6,12 @@ export const WorkoutWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  width: 70%;
+  width: 50%;
   padding: 0 160px;
 
+  @media ${devices.laptopL} {
+    width: 70%;
+  }
   @media ${devices.laptop} {
     padding: 0 5px;
     width: 80%;

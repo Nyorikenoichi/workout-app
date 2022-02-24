@@ -30,10 +30,9 @@ export const logOutAction =
   async (dispatch) => {
     try {
       dispatch(setLoadingAction({ isLoading: true }));
-
-      await signOut(auth);
       dispatch(setStatisticsAction({ statistics: null }));
       dispatch(setWorkoutsAction({ workouts: null }));
+      await signOut(auth);
     } catch (error) {
       dispatch(
         setErrorMessageAction({ errorMessage: (error as AuthError).code })

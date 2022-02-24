@@ -10,7 +10,7 @@ export const Main = React.memo(function Main() {
   const { state, dispatch } = useContext(ContextApp);
 
   useEffect(() => {
-    if (!state.workouts && !state.statistics) {
+    if (!state.workouts || !state.statistics) {
       dispatch(getInitialDataAction());
     }
   }, []);

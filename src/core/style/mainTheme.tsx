@@ -3,6 +3,8 @@ import { ThemeProvider } from 'styled-components';
 
 export interface Theme {
   colors: {
+    overlayText: string;
+    overlayBackground: string;
     background: string;
     backgroundDark: string;
     workoutSpinnerBar: string;
@@ -16,6 +18,7 @@ export interface Theme {
 const mainTheme = {
   colors: {
     overlayText: '#FFFFFF',
+    overlayBackground: '#212121',
     background: '#E5E5E5',
     backgroundDark: '#D9D9D9',
     workoutSpinnerBar: '#1DE9B6',

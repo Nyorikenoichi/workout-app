@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Theme } from '../../../../../core/style/mainTheme';
 
 export const VideoOverlayWrapper = styled.div`
   position: absolute;
@@ -9,7 +10,8 @@ export const VideoOverlayWrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: 3;
-  background: #212121;
+  background: ${(props: { theme: Theme }) =>
+    props.theme.colors.overlayBackground};
   opacity: 0.64;
-  color: #ffffff;
+  color: ${(props: { theme: Theme }) => props.theme.colors.overlayText};
 `;

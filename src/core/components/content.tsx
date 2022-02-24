@@ -11,6 +11,9 @@ const Content = styled.div`
   justify-content: flex-start;
   padding: 0 160px;
 
+  @media ${devices.tablet} {
+    padding: 0 80px;
+  }
   @media ${devices.mobileL} {
     padding: 0 5px;
   }

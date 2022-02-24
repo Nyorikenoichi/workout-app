@@ -1,21 +1,31 @@
 import * as React from 'react';
-import { Typography } from '@mui/material';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
 import { ContextApp } from '../../store/reducers/globalStateReducer';
 import HeaderContainer from './components/HeaderContainer';
 import Logout from './components/logout';
 import { logOutAction } from '../../store/thunk/auth';
-import { LogoutButton } from './components/logoutButton';
-import { UserNameLabel } from './components/userNameLabel';
 import { HeaderTitle } from './components/headerTitle';
+import { AccountCircleIcon } from './components/AccountCircleIcon';
+import { MenuItemLogout } from './components/menuItemLogout';
 
-export const Header = React.memo(function Header() {
+export const Header = function Header() {
   const { t } = useTranslation();
 
   const { state, dispatch } = useContext(ContextApp);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const onLogout = () => {
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logout = () => {
+    handleClose();
     dispatch(logOutAction());
   };
 
@@ -24,12 +34,31 @@ export const Header = React.memo(function Header() {
       <HeaderTitle variant="h3">{t('main_title')}</HeaderTitle>
       {!!state.user && (
         <Logout>
-          <UserNameLabel variant="h5">{state.user?.displayName}</UserNameLabel>
-          <LogoutButton variant="contained" onClick={onLogout}>
-            {t('sign_out')}
-          </LogoutButton>
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleMenu}
+            color="inherit"
+          >
+            <AccountCircleIcon />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            keepMounted
+            open={!!anchorEl}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>{state.user.displayName}</MenuItem>
+            <MenuItem onClick={handleClose}>{state.user.email}</MenuItem>
+            <MenuItemLogout onClick={logout}>{t('sign_out')}</MenuItemLogout>
+          </Menu>
         </Logout>
       )}
     </HeaderContainer>
   );
-});
+};

@@ -74,7 +74,7 @@ export const Workout = React.memo(function Workout() {
             {isPaused && <VideoOverlay />}
             <WorkoutVideo
               ref={videoRef}
-              src={`${currentExercise?.video}#t=0.5`}
+              src={currentExercise?.video}
               preload="metadata"
               autoPlay
               loop

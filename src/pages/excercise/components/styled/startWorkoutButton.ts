@@ -6,25 +6,19 @@ import styled from 'styled-components';
 export const StartWorkoutButton = styled(Button)`
   position: fixed;
   bottom: 25px;
-  width: 800px;
+  left: 0;
+  right: 0;
+  width: 55%;
+  margin: auto;
   background-color: ${(props: { theme: Theme }) =>
     props.theme.colors.buttonsBackground};
   box-shadow: 0 16px 32px rgba(170, 0, 255, 0.24);
   border-radius: 8px;
 
   @media ${devices.laptop} {
-    width: 700px;
-  }
-  @media ${devices.tablet} {
-    width: 450px;
+    width: 70%;
   }
   @media ${devices.mobileL} {
-    width: 415px;
-  }
-  @media ${devices.mobileM} {
-    width: 365px;
-  }
-  @media ${devices.mobileS} {
-    width: 315px;
+    width: 95%;
   }
 `;
