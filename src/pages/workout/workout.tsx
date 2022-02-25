@@ -16,13 +16,14 @@ import { VideoOverlay } from './components/videoOverlay';
 import { ControllsEmptyDiv } from './components/styled/controllsEmptyDiv';
 import { ControllsButton } from './components/styled/ControllsButton';
 import useExerciseTimer from '../../core/hooks/useExerciseTimer';
+import Exercise from '../../core/interfaces/exercise';
 import { WorkoutVideo } from './components/styled/workoutVideo';
 import { WorkoutVideoWrapper } from './components/styled/workoutVideoWrapper';
 
 export const Workout = React.memo(function Workout() {
   const { state } = useContext(ContextApp);
 
-  const [
+  const {
     currentExercise,
     currentExerciseIndex,
     isPaused,
@@ -35,7 +36,7 @@ export const Workout = React.memo(function Workout() {
     totalTime,
     trainingFinished,
     videoRef,
-  ] = useExerciseTimer(state);
+  } = useExerciseTimer(state.currentExerciseGroup?.exercises as Exercise[]);
 
   return (
     <WorkoutWrapper>

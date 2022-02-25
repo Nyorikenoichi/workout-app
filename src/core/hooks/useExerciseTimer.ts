@@ -1,7 +1,6 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 import useSound from 'use-sound';
 import Exercise from '../interfaces/exercise';
-import { GlobalState } from '../store/reducers/globalStateReducer';
 import timerBeep from '../../assets/sound/timerBeep.mp3';
 import whistle from '../../assets/sound/whistle.mp3';
 import finish from '../../assets/sound/finishTraining.mp3';
@@ -10,22 +9,20 @@ const preparingDuration = 5;
 const counterInterval = 1000;
 const fullProgress = 100;
 
-export default function useExerciseTimer(
-  state: GlobalState
-): [
-  Exercise | undefined,
-  number,
-  boolean,
-  () => void,
-  boolean,
-  () => void,
-  () => void,
-  number,
-  () => number,
-  number,
-  boolean,
-  RefObject<HTMLVideoElement>
-] {
+export default function useExerciseTimer(currentExercises: Exercise[]): {
+  currentExercise: Exercise | undefined;
+  currentExerciseIndex: number;
+  isPaused: boolean;
+  switchPause: () => void;
+  isPreparing: boolean;
+  nextExercise: () => void;
+  prevExercise: () => void;
+  exerciseCounter: number;
+  convertCounterToPercent: () => number;
+  totalTime: number;
+  trainingFinished: boolean;
+  videoRef: RefObject<HTMLVideoElement>;
+} {
   const [playBeep] = useSound(timerBeep, { volume: 0.5 });
   const [playWhistle] = useSound(whistle, { volume: 0.5 });
   const [playFinish] = useSound(finish, { volume: 0.5 });
@@ -37,9 +34,8 @@ export default function useExerciseTimer(
   const [isPreparing, setPreparing] = useState(true);
   const [trainingFinished, setTrainingFinished] = useState(false);
 
-  const currentExercise =
-    state.currentExerciseGroup?.exercises[currentExerciseIndex];
-  const exercisesCount = state.currentExerciseGroup?.exercises.length as number;
+  const currentExercise = currentExercises[currentExerciseIndex];
+  const exercisesCount = currentExercises.length as number;
 
   const nextExercise = () => {
     if (currentExerciseIndex < exercisesCount - 1) {
@@ -125,7 +121,7 @@ export default function useExerciseTimer(
     );
   };
 
-  return [
+  return {
     currentExercise,
     currentExerciseIndex,
     isPaused,
@@ -138,5 +134,5 @@ export default function useExerciseTimer(
     totalTime,
     trainingFinished,
     videoRef,
-  ];
+  };
 }
