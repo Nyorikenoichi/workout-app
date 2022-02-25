@@ -11,6 +11,7 @@ export const WorkoutWrapper = styled.div`
 
   @media ${devices.laptopL} {
     width: 70%;
+    padding: 0 80px;
   }
   @media ${devices.laptop} {
     padding: 0 5px;
