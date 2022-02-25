@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PauseButtonWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

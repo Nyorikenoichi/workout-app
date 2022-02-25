@@ -16,16 +16,16 @@ export const Header = function Header() {
   const { state, dispatch } = useContext(ContextApp);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const onOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const onCloseMenu = () => {
     setAnchorEl(null);
   };
 
   const logout = () => {
-    handleClose();
+    onCloseMenu();
     dispatch(logOutAction());
   };
 
@@ -39,7 +39,7 @@ export const Header = function Header() {
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
-            onClick={handleMenu}
+            onClick={onOpenMenu}
             color="inherit"
           >
             <AccountCircleIcon />
@@ -51,10 +51,10 @@ export const Header = function Header() {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             keepMounted
             open={!!anchorEl}
-            onClose={handleClose}
+            onClose={onCloseMenu}
           >
-            <MenuItem onClick={handleClose}>{state.user.displayName}</MenuItem>
-            <MenuItem onClick={handleClose}>{state.user.email}</MenuItem>
+            <MenuItem onClick={onCloseMenu}>{state.user.displayName}</MenuItem>
+            <MenuItem onClick={onCloseMenu}>{state.user.email}</MenuItem>
             <MenuItemLogout onClick={logout}>{t('sign_out')}</MenuItemLogout>
           </Menu>
         </Logout>

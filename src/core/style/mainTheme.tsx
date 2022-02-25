@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 export interface Theme {
   colors: {
+    lightText: string;
     overlayText: string;
     overlayBackground: string;
     background: string;
@@ -17,6 +18,7 @@ export interface Theme {
 
 const mainTheme = {
   colors: {
+    lightText: '#222222',
     overlayText: '#FFFFFF',
     overlayBackground: '#212121',
     background: '#E5E5E5',

@@ -53,7 +53,7 @@ export const Exercises = React.memo(function Exercises() {
         </BackToMainButton>
         <ExercisesPoster src={exerciseImage} alt="" />
         <ExercisesDescription>
-          <Typography>{`Day ${dayNumber}`}</Typography>
+          <Typography>{t('day_number', { dayNumber })}</Typography>
           <ExercisesTitle>{currentExerciseGroup?.title}</ExercisesTitle>
           <ExercisesDivider />
           <ExercisesList>{renderExercisesList()}</ExercisesList>
