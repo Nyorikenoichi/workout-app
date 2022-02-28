@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton, Menu } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
 import { ContextApp } from '../../store/reducers/globalStateReducer';
@@ -9,6 +9,8 @@ import { logOutAction } from '../../store/thunk/auth';
 import { HeaderTitle } from './components/headerTitle';
 import { AccountCircleIcon } from './components/AccountCircleIcon';
 import { MenuItemLogout } from './components/menuItemLogout';
+import { MenuLabel } from './components/menuLabel';
+import { UserMenu } from './components/userMenu';
 
 export const Header = function Header() {
   const { t } = useTranslation();
@@ -44,7 +46,7 @@ export const Header = function Header() {
           >
             <AccountCircleIcon />
           </IconButton>
-          <Menu
+          <UserMenu
             id="menu-appbar"
             anchorEl={anchorEl}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -53,10 +55,10 @@ export const Header = function Header() {
             open={!!anchorEl}
             onClose={onCloseMenu}
           >
-            <MenuItem onClick={onCloseMenu}>{state.user.displayName}</MenuItem>
-            <MenuItem onClick={onCloseMenu}>{state.user.email}</MenuItem>
+            <MenuLabel>{state.user.displayName}</MenuLabel>
+            <MenuLabel>{state.user.email}</MenuLabel>
             <MenuItemLogout onClick={logout}>{t('sign_out')}</MenuItemLogout>
-          </Menu>
+          </UserMenu>
         </Logout>
       )}
     </HeaderContainer>

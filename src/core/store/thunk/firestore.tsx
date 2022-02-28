@@ -38,6 +38,7 @@ export const incrementExercisesProcessedAction =
   (): Thunk<GlobalStateActionType<Partial<GlobalState>>, GlobalState> =>
   async (dispatch, state) => {
     try {
+      dispatch(setLoadingAction({ isLoading: true }));
       const newStatistics = state.statistics;
       if (newStatistics) {
         newStatistics.exercisesPerformedCount[

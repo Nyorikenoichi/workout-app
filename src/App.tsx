@@ -46,9 +46,7 @@ export function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      dispatch(setLoadingAction({ isLoading: true }));
       dispatch(setUserAction({ user: currentUser }));
-      dispatch(setLoadingAction({ isLoading: false }));
     });
   }, []);
 

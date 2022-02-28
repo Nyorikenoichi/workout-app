@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { CardContent, CardMedia, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import { MainRoutes } from '../../../core/constants/mainRoutes';
 import ExerciseGroup from '../../../core/interfaces/exerciseGroup';
 import { setCurrentExerciseGroupAction } from '../../../core/store/actions/globalStateActions';
 import { ContextApp } from '../../../core/store/reducers/globalStateReducer';
+import { StyledCard } from './card';
 
 interface WorkoutCardProps {
   card: ExerciseGroup;
@@ -26,7 +27,7 @@ export default function WorkoutCard({ card, completeCount }: WorkoutCardProps) {
   };
 
   return (
-    <Card sx={{ width: 300, margin: '25px' }} onClick={onSetCurrentExercises}>
+    <StyledCard onClick={onSetCurrentExercises}>
       <CardMedia component="img" height="300" image={card.exercises[0].photo} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -39,6 +40,6 @@ export default function WorkoutCard({ card, completeCount }: WorkoutCardProps) {
           {`${t('times_complete')} ${completeCount}`}
         </Typography>
       </CardContent>
-    </Card>
+    </StyledCard>
   );
 }

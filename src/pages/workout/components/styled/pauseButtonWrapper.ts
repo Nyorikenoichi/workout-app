@@ -7,5 +7,6 @@ export const PauseButtonWrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   bottom: 0;
+  z-index: 4;
   overflow: hidden;
 `;

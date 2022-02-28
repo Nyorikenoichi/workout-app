@@ -54,8 +54,6 @@ export const loginAction =
       dispatch(
         setErrorMessageAction({ errorMessage: (error as AuthError).code })
       );
-    } finally {
-      dispatch(setLoadingAction({ isLoading: false }));
     }
   };
 
