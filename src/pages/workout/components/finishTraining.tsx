@@ -7,9 +7,10 @@ import { secondsToMinutes } from 'src/core/helpers/date';
 import { MainRoutes } from '../../../core/constants/mainRoutes';
 import { ContextApp } from '../../../core/store/reducers/globalStateReducer';
 import { incrementExercisesProcessedAction } from '../../../core/store/thunk/firestore';
-import { FinishIcon } from './styled/finishIcon';
-import { FinishButton } from './styled/finishButton';
-import { FinishDescription } from './styled/finishDescription';
+import { FinishIcon } from './styled/finish/finishIcon';
+import { FinishButton } from './styled/finish/finishButton';
+import { FinishDescription } from './styled/finish/finishDescription';
+import { FinishTitle } from './styled/finish/finishTitle';
 
 interface FinishTrainingProps {
   time: number;
@@ -30,9 +31,7 @@ export function FinishTraining({ time }: FinishTrainingProps) {
   return (
     <>
       <FinishIcon />
-      <Typography fontSize={40} fontWeight={600}>
-        {t('workout_complete')}
-      </Typography>
+      <FinishTitle>{t('workout_complete')}</FinishTitle>
       <FinishDescription>{t('workout_summary')}</FinishDescription>
       <Typography fontSize={14}>{t('minutes')}</Typography>
       <Typography fontSize={40} fontWeight={600}>

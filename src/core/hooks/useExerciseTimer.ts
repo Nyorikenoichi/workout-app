@@ -1,5 +1,8 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 import Exercise from '../interfaces/exercise';
+import timerBeep from '../../assets/sound/timerBeep.mp3';
+import whistle from '../../assets/sound/whistle.mp3';
+import finish from '../../assets/sound/finishTraining.mp3';
 
 const preparingDuration = 5;
 const counterInterval = 1000;
@@ -19,6 +22,10 @@ export default function useExerciseTimer(currentExercises: Exercise[]): {
   trainingFinished: boolean;
   videoRef: RefObject<HTMLVideoElement>;
 } {
+  const exerciseEndSound = new Audio(timerBeep);
+  const exerciseStartSound = new Audio(whistle);
+  const finishSound = new Audio(finish);
+
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [exerciseCounter, setCounter] = useState(preparingDuration);
   const [totalTime, setTotalTime] = useState(0);
@@ -36,6 +43,7 @@ export default function useExerciseTimer(currentExercises: Exercise[]): {
       setPreparing(true);
     } else {
       setTrainingFinished(true);
+      finishSound.play();
     }
   };
 
@@ -75,18 +83,25 @@ export default function useExerciseTimer(currentExercises: Exercise[]): {
   useEffect(() => {
     if (exerciseCounter === 0 && isPreparing) {
       setPreparing(false);
+      exerciseStartSound.play();
       setCounter(currentExercise?.duration as number);
     }
     if (exerciseCounter === 0 && !isPreparing) {
       nextExercise();
     }
+    if (exerciseCounter > 0 && exerciseCounter <= 3 && !isPaused) {
+      exerciseEndSound.play();
+    }
 
-    const timer = setTimeout(() => {
-      if (!isPaused) {
-        setCounter((c) => c - 1);
-      }
-      setTotalTime((time) => time + 1);
-    }, counterInterval);
+    let timer: NodeJS.Timeout;
+    if (!trainingFinished) {
+      timer = setTimeout(() => {
+        if (!isPaused) {
+          setCounter((c) => c - 1);
+        }
+        setTotalTime((time) => time + 1);
+      }, counterInterval);
+    }
 
     return () => {
       if (timer) {

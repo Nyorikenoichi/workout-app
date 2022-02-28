@@ -4,8 +4,7 @@ const Logout = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
-  width: 250px;
+  height: 90px;
   padding: 5px;
 `;
 

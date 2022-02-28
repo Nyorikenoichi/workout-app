@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
+import { CircularProgress } from '@mui/material';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import WorkoutCard from './components/workoutCard';
 import CardsWrapper from './components/cardsWrapper';
 import ExerciseGroup from '../../core/interfaces/exerciseGroup';
 import { getInitialDataAction } from '../../core/store/thunk/firestore';
+import { WorkoutsLoader } from './components/WorkoutsLoader';
 
 export const Main = React.memo(function Main() {
   const { state, dispatch } = useContext(ContextApp);
 
   useEffect(() => {
-    if (!state.workouts && !state.statistics) {
+    if (!state.workouts || !state.statistics) {
       dispatch(getInitialDataAction());
     }
   }, []);
@@ -27,7 +29,11 @@ export const Main = React.memo(function Main() {
 
   return (
     <CardsWrapper>
-      {state.workouts && renderCards(state.workouts.questions)}
+      {state.workouts ? (
+        renderCards(state.workouts.questions)
+      ) : (
+        <WorkoutsLoader />
+      )}
     </CardsWrapper>
   );
 });

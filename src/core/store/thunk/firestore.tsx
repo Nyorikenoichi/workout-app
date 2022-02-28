@@ -18,8 +18,6 @@ export const getInitialDataAction =
   (): Thunk<GlobalStateActionType<Partial<GlobalState>>, GlobalState> =>
   async (dispatch, state) => {
     try {
-      dispatch(setLoadingAction({ isLoading: true }));
-
       const workouts = await getWorkouts();
       const statistics = await getStatistics(state);
 
@@ -29,8 +27,6 @@ export const getInitialDataAction =
       dispatch(
         setErrorMessageAction({ errorMessage: (error as FirestoreError).code })
       );
-    } finally {
-      dispatch(setLoadingAction({ isLoading: false }));
     }
   };
 
@@ -38,6 +34,7 @@ export const incrementExercisesProcessedAction =
   (): Thunk<GlobalStateActionType<Partial<GlobalState>>, GlobalState> =>
   async (dispatch, state) => {
     try {
+      dispatch(setLoadingAction({ isLoading: true }));
       const newStatistics = state.statistics;
       if (newStatistics) {
         newStatistics.exercisesPerformedCount[

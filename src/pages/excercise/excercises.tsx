@@ -16,6 +16,7 @@ import { ExercisesDivider } from './components/styled/exercisesDivider';
 import { ExercisesTitle } from './components/styled/exercisesTitle';
 import { BackToMainButton } from './components/styled/backToMainButton';
 import { ExercisesList } from './components/styled/exercisesList';
+import { ExercisesDescription } from './components/styled/exercisesDescription';
 
 export const Exercises = React.memo(function Exercises() {
   const { state } = useContext(ContextApp);
@@ -51,10 +52,12 @@ export const Exercises = React.memo(function Exercises() {
           <ArrowBackIcon />
         </BackToMainButton>
         <ExercisesPoster src={exerciseImage} alt="" />
-        <Typography>{`Day ${dayNumber}`}</Typography>
-        <ExercisesTitle>{currentExerciseGroup?.title}</ExercisesTitle>
-        <ExercisesDivider />
-        <ExercisesList>{renderExercisesList()}</ExercisesList>
+        <ExercisesDescription>
+          <Typography>{t('day_number', { dayNumber })}</Typography>
+          <ExercisesTitle>{currentExerciseGroup?.title}</ExercisesTitle>
+          <ExercisesDivider />
+          <ExercisesList>{renderExercisesList()}</ExercisesList>
+        </ExercisesDescription>
       </ExercisesWrapper>
       <StartWorkoutButton variant="contained" onClick={onStartWorkout}>
         {t('start_exercise')}

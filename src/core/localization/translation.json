@@ -33,6 +33,8 @@
       "start_exercise": "Start exercise",
       "minutes": "Minutes",
 
+      "day_number": "Day {{dayNumber}}",
+
       "auth/confirm-password-error": "Passwords in fields must match!",
       "auth/admin-restricted-operation": "This operation is restricted to administrators only.",
       "auth/argument-error": "",
