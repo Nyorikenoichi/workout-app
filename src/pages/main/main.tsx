@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
-import { CircularProgress } from '@mui/material';
 import { ContextApp } from '../../core/store/reducers/globalStateReducer';
 import WorkoutCard from './components/workoutCard';
 import CardsWrapper from './components/cardsWrapper';
